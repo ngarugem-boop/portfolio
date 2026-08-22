@@ -1,0 +1,2416 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Moses Ngaru</title>
+<meta name="description" content="Video editor and videographer portfolio — selected work, showreel, and contact." />
+
+<!-- Fonts -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Geist+Mono:wght@400;500;600&family=Inter:wght@400;500&family=JetBrains+Mono:wght@400;500&family=Space+Grotesk:wght@400;500;600;700&family=Syne:wght@800&family=Poppins:wght@700;800;900&display=swap" rel="stylesheet">
+
+<style>
+/* ===========================================================
+   TOKENS
+   =========================================================== */
+:root {
+  --bg: #FFFFFF;
+  --bg-raised: #F7F7F7;
+  --text: #000000;
+  --text-muted: rgba(0, 0, 0, 0.6);
+  --line: rgba(0, 0, 0, 0.121569);
+  --accent: #B3402E;
+
+  --font-display: 'Space Grotesk', sans-serif;
+  --font-body: 'Inter', sans-serif;
+  --font-mono: 'JetBrains Mono', monospace;
+
+  --ease: cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+html { scroll-behavior: smooth; }
+
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: var(--font-body);
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
+  overflow-x: hidden;
+}
+
+a { color: inherit; text-decoration: none; }
+
+img, video { display: block; max-width: 100%; }
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.001ms !important;
+    transition-duration: 0.001ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+/* ===========================================================
+   SCRUB BAR (scroll progress, styled like a video timeline)
+   =========================================================== */
+.scrub-bar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 2px;
+  background: var(--line);
+  z-index: 100;
+}
+.scrub-fill {
+  height: 100%;
+  width: 0%;
+  background: var(--accent);
+  transition: width 0.1s linear;
+}
+
+/* ===========================================================
+   NAV
+   =========================================================== */
+.nav {
+  box-sizing: border-box;
+  position: relative;
+  top: auto;
+  left: auto;
+  width: min(100%, 1440px);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 24px 80px;
+  margin: 0 auto;
+  min-height: 73px;
+  background: #FFFFFF;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.121569);
+  z-index: 20;
+  mix-blend-mode: normal;
+}
+
+.nav-logo {
+  font-family: 'Geist Mono', monospace;
+  font-weight: 600;
+  font-size: 13px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+.nav-logo .dot { color: #000000; }
+
+.nav-links {
+  display: flex;
+  gap: 28px;
+  font-family: 'Geist Mono', monospace;
+  font-size: 12px;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+}
+.nav-links a {
+  position: relative;
+  opacity: 0.8;
+  transition: opacity 0.2s var(--ease);
+}
+.nav-links a:hover { opacity: 1; }
+.nav-links a::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  bottom: -4px;
+  width: 0%;
+  height: 1px;
+  background: currentColor;
+  transition: width 0.25s var(--ease);
+}
+.nav-links a:hover::after { width: 100%; }
+
+@media (max-width: 640px) {
+  .nav {
+    padding: 20px;
+    min-height: 64px;
+  }
+
+  .nav-links {
+    display: none;
+  }
+}
+
+/* ===========================================================
+   HERO
+   =========================================================== */
+.hero {
+  position: relative;
+  min-height: 100svh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 0 clamp(20px, 5vw, 64px);
+}
+
+.hero-overlay {
+  position: absolute;
+  top: 28px;
+  right: clamp(20px, 5vw, 64px);
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-family: var(--font-mono);
+  font-size: 12px;
+  color: var(--text-muted);
+}
+.rec-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--accent);
+  animation: pulse 1.6s ease-in-out infinite;
+}
+@keyframes pulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.25; }
+}
+.rec-label { color: var(--accent); letter-spacing: 0.1em; }
+.timecode { letter-spacing: 0.05em; min-width: 92px; }
+
+@media (max-width: 640px) {
+  .hero-overlay { display: none; }
+}
+
+.hero-content {
+  max-width: 900px;
+  animation: rise 0.9s var(--ease) both;
+}
+@keyframes rise {
+  from { opacity: 0; transform: translateY(24px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+.eyebrow {
+  font-family: var(--font-mono);
+  font-size: 13px;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  color: var(--text-muted);
+  margin-bottom: 20px;
+}
+
+.hero-title {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: clamp(48px, 10vw, 128px);
+  line-height: 0.95;
+  letter-spacing: -0.02em;
+}
+
+.hero-sub {
+  margin-top: 28px;
+  max-width: 440px;
+  font-size: 16px;
+  color: var(--text-muted);
+}
+
+.hero-cta {
+  display: inline-block;
+  margin-top: 40px;
+  font-family: var(--font-mono);
+  font-size: 13px;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  padding-bottom: 4px;
+  border-bottom: 1px solid var(--line);
+  transition: border-color 0.25s var(--ease), color 0.25s var(--ease);
+}
+.hero-cta:hover {
+  border-color: var(--accent);
+  color: var(--accent);
+}
+
+.scroll-cue {
+  position: absolute;
+  bottom: 40px;
+  left: clamp(20px, 5vw, 64px);
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  font-family: var(--font-mono);
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--text-muted);
+}
+.scroll-line {
+  width: 1px;
+  height: 32px;
+  background: var(--line);
+  position: relative;
+  overflow: hidden;
+}
+.scroll-line::after {
+  content: '';
+  position: absolute;
+  top: -100%;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: var(--accent);
+  animation: scrollDrop 2s ease-in-out infinite;
+}
+@keyframes scrollDrop {
+  0%   { top: -100%; }
+  60%  { top: 100%; }
+  100% { top: 100%; }
+}
+
+/* ===========================================================
+   SECTION LABEL (shared)
+   =========================================================== */
+.section-label {
+  font-family: var(--font-mono);
+  font-size: 12px;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--text-muted);
+  padding: 0 clamp(20px, 5vw, 64px);
+  margin-bottom: 32px;
+}
+
+section {
+  padding: 120px 0 80px;
+  border-top: 1px solid var(--line);
+}
+
+/* ===========================================================
+   REEL
+   =========================================================== */
+.reel-frame {
+  margin: 0 clamp(20px, 5vw, 64px);
+  position: relative;
+  background: var(--bg-raised);
+  border: 1px solid var(--line);
+}
+
+.reel-video {
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  background: #000;
+}
+
+.reel-frame-label {
+  position: absolute;
+  bottom: -28px;
+  right: 0;
+  font-family: var(--font-mono);
+  font-size: 11px;
+  color: var(--text-muted);
+  letter-spacing: 0.05em;
+}
+
+/* ===========================================================
+   MOTION TITLE (Poppins heading + a curved, tapering trail of
+   the same word swooping behind it — like a motion-graphics
+   title card, not a simple fade)
+   =========================================================== */
+.motion-title-wrap {
+  position: relative;
+  display: block;
+  padding-bottom: 24px;
+}
+
+.echo-title {
+  position: relative;
+  z-index: 1;
+  display: inline-block;
+  font-family: 'Poppins', sans-serif;
+  font-weight: 800;
+  font-size: clamp(40px, 7vw, 84px);
+  line-height: 0.98;
+  letter-spacing: -0.01em;
+  color: #000000;
+  background: var(--bg);
+  white-space: nowrap;
+}
+
+/* ===========================================================
+   FEATURE INTRO (used above Work and Photography grids)
+   =========================================================== */
+.feature-intro {
+  padding: 0 clamp(20px, 5vw, 64px);
+  margin-bottom: 48px;
+  max-width: 640px;
+}
+
+.feature-intro-text {
+  margin-top: 20px;
+  font-size: 16px;
+  line-height: 1.7;
+  color: var(--text-muted);
+  max-width: 480px;
+}
+
+.photography .motion-title-wrap {
+  margin: 0;
+  display: block;
+  padding-bottom: 20px;
+}
+
+/* ===========================================================
+   PROJECT THUMB STACK (peeking tabs behind the video card)
+   =========================================================== */
+.project-thumb-stack {
+  position: relative;
+  max-width: 340px;
+  margin: 0 auto;
+  padding-top: 26px;
+}
+
+.project-thumb-tab {
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  border-radius: 4px 4px 0 0;
+  z-index: 0;
+}
+
+.project-thumb-tab-1 {
+  top: 0;
+  width: 84%;
+  height: 36px;
+  background: rgba(0, 0, 0, 0.04);
+  border: 1px solid var(--line);
+  border-bottom: none;
+}
+
+.project-thumb-tab-2 {
+  top: 13px;
+  width: 92%;
+  height: 26px;
+  background: rgba(179, 64, 46, 0.1);
+  border: 1px solid rgba(179, 64, 46, 0.25);
+  border-bottom: none;
+}
+
+.project-thumb-stack .project-thumb {
+  position: relative;
+  z-index: 1;
+}
+
+/* ===========================================================
+   PHOTOGRAPHY
+   =========================================================== */
+.photography {
+  width: min(100%, 1440px);
+  margin: 0 auto;
+  padding: 100px 80px 120px;
+  border-top: 1px solid rgba(0, 0, 0, 0.121569);
+}
+
+/* Text on the left, wheel on the right — same idea as the reference layout */
+.photography-layout {
+  display: grid;
+  grid-template-columns: minmax(240px, 380px) 1fr;
+  align-items: center;
+  gap: 64px;
+}
+
+@media (max-width: 900px) {
+  .photography-layout {
+    grid-template-columns: 1fr;
+    gap: 40px;
+    text-align: center;
+  }
+  .photography-intro {
+    align-items: center;
+  }
+  .photography-intro-text {
+    max-width: none;
+  }
+}
+
+.photography-intro {
+  display: flex;
+  flex-direction: column;
+}
+
+.photography-intro .echo-title {
+  font-size: clamp(34px, 4vw, 56px);
+}
+
+.photography-intro-text {
+  margin-top: 4px;
+  font-size: 15px;
+  line-height: 1.7;
+  color: var(--text-muted);
+  max-width: 360px;
+}
+
+/* Vertical scrolling wheel: same fanned-stack idea as the poster wheel,
+   just rotated onto the Y axis so cards scroll up/down instead of side to side.
+   Sized to match the poster wheel (320px cards, 600px tall). */
+.photo-wheel-wrap {
+  position: relative;
+  width: 100%;
+  max-width: 440px;
+  margin: 0 auto;
+  padding: 8px 8px 88px;
+  isolation: isolate;
+  opacity: 0;
+  transform: translateY(24px);
+  transition: opacity 0.7s var(--ease), transform 0.7s var(--ease);
+}
+.photo-wheel-wrap.in-view {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.photo-wheel {
+  position: relative;
+  width: 100%;
+  height: 600px;
+  overflow: hidden;
+  z-index: 1;
+}
+
+.photo-wheel-track {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  touch-action: pan-x;
+  outline: none;
+}
+
+.photo-wheel-item {
+  --offset: 0;
+  position: absolute;
+  width: 320px;
+  aspect-ratio: 4 / 5;
+  border: 1px solid rgba(0, 0, 0, 0.121569);
+  background: #F5F5F3;
+  padding: 0;
+  cursor: pointer;
+  overflow: hidden;
+  box-shadow: 0 18px 34px rgba(0, 0, 0, 0.16);
+  transform-origin: 50% 50%;
+  transform:
+    translateY(calc(var(--offset) * 160px))
+    translateX(calc(min(abs(var(--offset)), 4) * 16px))
+    rotate(calc(var(--offset) * -6deg))
+    scale(calc(1 - min(abs(var(--offset)), 4) * 0.06));
+  opacity: calc(1 - min(abs(var(--offset)), 5) * 0.12);
+  transition: transform 0.6s var(--ease), opacity 0.6s var(--ease), border-color 0.3s var(--ease), box-shadow 0.4s var(--ease);
+  z-index: calc(20 - abs(var(--offset)));
+}
+
+.photo-wheel-item:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 3px;
+}
+
+.photo-wheel-item.is-active {
+  border-color: var(--accent);
+  cursor: zoom-in;
+  transform: translateY(0) translateX(0) rotate(0deg) scale(1.06);
+  box-shadow: 0 28px 48px rgba(0, 0, 0, 0.26);
+}
+
+.photo-wheel-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: none;
+}
+
+.photo-wheel-img[src]:not([src=""]) {
+  display: block;
+}
+
+.photo-wheel-placeholder {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: 'Geist Mono', monospace;
+  font-size: 12px;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: rgba(0, 0, 0, 0.45);
+  text-align: center;
+  padding: 0 12px;
+}
+
+.photo-wheel-img[src]:not([src=""]) ~ .photo-wheel-placeholder {
+  display: none;
+}
+
+.photo-wheel-title {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  padding: 10px 12px;
+  font-family: 'Geist Mono', monospace;
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: #000000;
+  background: linear-gradient(to top, rgba(255, 255, 255, 0.94), rgba(255, 255, 255, 0));
+  opacity: 0;
+  transition: opacity 0.3s var(--ease);
+}
+
+.photo-wheel-item.is-active .photo-wheel-title {
+  opacity: 1;
+}
+
+/* Advance arrow — sits below the wheel, pointing down */
+.photo-wheel-arrow {
+  position: absolute;
+  left: 50%;
+  bottom: 8px;
+  transform: translateX(-50%);
+  width: 56px;
+  height: 56px;
+  border-radius: 50%;
+  border: 1px solid rgba(0, 0, 0, 0.2);
+  background: #FFFFFF;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  z-index: 5;
+  color: #000000;
+  transition: border-color 0.25s var(--ease), background 0.25s var(--ease), color 0.25s var(--ease), transform 0.25s var(--ease);
+}
+.photo-wheel-arrow svg { width: 20px; height: 20px; transform: rotate(90deg); }
+.photo-wheel-arrow:hover,
+.photo-wheel-arrow:focus-visible {
+  border-color: var(--accent);
+  background: var(--accent);
+  color: #FFFFFF;
+  transform: translateX(-50%) scale(1.06);
+}
+
+.project-grid {
+  padding: 0 clamp(20px, 5vw, 64px);
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 48px 32px;
+}
+
+@media (max-width: 800px) {
+  .project-grid { grid-template-columns: repeat(2, 1fr); }
+}
+
+@media (max-width: 520px) {
+  .project-grid { grid-template-columns: 1fr; }
+}
+
+.project-card {
+  cursor: pointer;
+  opacity: 0;
+  transform: translateY(24px);
+  transition: opacity 0.7s var(--ease), transform 0.7s var(--ease);
+}
+.project-card.in-view {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.project-thumb {
+  position: relative;
+  aspect-ratio: 9 / 16;
+  max-width: 340px;
+  margin: 0 auto;
+  background: var(--bg-raised);
+  border: 1px solid var(--line);
+  overflow: hidden;
+}
+.project-thumb video {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.6s var(--ease);
+}
+.project-card:hover .project-thumb video {
+  transform: scale(1.03);
+}
+
+.project-scrub {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 2px;
+  background: rgba(237, 236, 230, 0.15);
+}
+.project-scrub-fill {
+  height: 100%;
+  width: 0%;
+  background: var(--accent);
+  transition: width 0.2s linear;
+}
+
+.project-meta {
+  margin-top: 16px;
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+}
+.project-meta h3 {
+  font-family: var(--font-display);
+  font-weight: 500;
+  font-size: 20px;
+}
+.project-tags {
+  font-family: var(--font-mono);
+  font-size: 12px;
+  color: var(--text-muted);
+}
+
+/* ===========================================================
+   POSTERS
+   =========================================================== */
+.posters {
+  width: min(100%, 1440px);
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  padding: 100px 80px 120px;
+  gap: 56px;
+  border-top: 1px solid rgba(0, 0, 0, 0.121569);
+}
+
+.posters .section-label,
+.testimonials .section-label {
+  padding: 0;
+  margin: 0;
+}
+
+.section-intro {
+  font-family: 'Geist Mono', monospace;
+  font-size: 12px;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: rgba(0, 0, 0, 0.6);
+}
+
+/* Wrap: holds the wheel, its decorative rings, and the preview arrow */
+.poster-wheel-wrap {
+  position: relative;
+  width: 100%;
+  padding: 8px 88px 8px 8px;
+  isolation: isolate;
+  opacity: 0;
+  transform: translateY(24px);
+  transition: opacity 0.7s var(--ease), transform 0.7s var(--ease);
+}
+.poster-wheel-wrap.in-view {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* Decorative rings, echoing the hero banner's geometric circles */
+.poster-wheel-accent-circle {
+  position: absolute;
+  border: 1px solid rgba(0, 0, 0, 0.12);
+  border-radius: 50%;
+  z-index: 0;
+  pointer-events: none;
+}
+.poster-wheel-accent-circle {
+  width: 380px;
+  height: 380px;
+  right: -140px;
+  top: -90px;
+  opacity: 0.5;
+}
+.poster-wheel-accent-circle-2 {
+  width: 230px;
+  height: 230px;
+  left: 60px;
+  bottom: -70px;
+  opacity: 0.3;
+}
+
+/* The wheel: a wide fanned spread of cards, front one raised and enlarged */
+.poster-wheel {
+  position: relative;
+  width: 100%;
+  height: 600px;
+  overflow: hidden;
+  z-index: 1;
+}
+
+.poster-wheel-track {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  touch-action: pan-y;
+  padding-bottom: 44px;
+  outline: none;
+}
+
+.poster-wheel-item {
+  --offset: 0;
+  position: absolute;
+  bottom: 44px;
+  width: 320px;
+  aspect-ratio: 3 / 4;
+  border: 1px solid rgba(0, 0, 0, 0.121569);
+  background: #F5F5F3;
+  padding: 0;
+  cursor: pointer;
+  overflow: hidden;
+  box-shadow: 0 18px 34px rgba(0, 0, 0, 0.16);
+  transform-origin: 50% 100%;
+  transform:
+    translateX(calc(var(--offset) * 176px))
+    translateY(calc(min(abs(var(--offset)), 4) * 18px))
+    rotate(calc(var(--offset) * 9deg))
+    scale(calc(1 - min(abs(var(--offset)), 4) * 0.05));
+  opacity: calc(1 - min(abs(var(--offset)), 5) * 0.08);
+  transition: transform 0.6s var(--ease), opacity 0.6s var(--ease), border-color 0.3s var(--ease), box-shadow 0.4s var(--ease);
+  z-index: calc(20 - abs(var(--offset)));
+}
+
+.poster-wheel-item:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 3px;
+}
+
+.poster-wheel-item.is-active {
+  border-color: var(--accent);
+  cursor: zoom-in;
+  transform: translateX(0) translateY(-32px) rotate(0deg) scale(1.06);
+  box-shadow: 0 28px 48px rgba(0, 0, 0, 0.26);
+}
+
+.poster-wheel-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: none;
+}
+
+/* Shows automatically once the img has a real src filled in — no extra class needed */
+.poster-wheel-img[src]:not([src=""]) {
+  display: block;
+}
+
+.poster-wheel-placeholder {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: 'Geist Mono', monospace;
+  font-size: 12px;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: rgba(0, 0, 0, 0.45);
+  text-align: center;
+  padding: 0 12px;
+}
+
+.poster-wheel-img[src]:not([src=""]) ~ .poster-wheel-placeholder {
+  display: none;
+}
+
+.poster-wheel-title {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  padding: 10px 12px;
+  font-family: 'Geist Mono', monospace;
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: #000000;
+  background: linear-gradient(to top, rgba(255, 255, 255, 0.94), rgba(255, 255, 255, 0));
+  opacity: 0;
+  transition: opacity 0.3s var(--ease);
+}
+
+.poster-wheel-item.is-active .poster-wheel-title {
+  opacity: 1;
+}
+
+/* Preview arrow — sits at the far right of the wheel */
+.poster-wheel-arrow {
+  position: absolute;
+  right: 8px;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 56px;
+  height: 56px;
+  border-radius: 50%;
+  border: 1px solid rgba(0, 0, 0, 0.2);
+  background: #FFFFFF;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  z-index: 5;
+  color: #000000;
+  transition: border-color 0.25s var(--ease), background 0.25s var(--ease), color 0.25s var(--ease), transform 0.25s var(--ease);
+}
+.poster-wheel-arrow svg { width: 20px; height: 20px; }
+.poster-wheel-arrow:hover,
+.poster-wheel-arrow:focus-visible {
+  border-color: var(--accent);
+  background: var(--accent);
+  color: #FFFFFF;
+  transform: translateY(-50%) scale(1.06);
+}
+
+/* Full preview lightbox */
+.poster-lightbox {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.92);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 200;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.3s var(--ease);
+}
+.poster-lightbox.is-open {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.poster-lightbox-figure {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 16px;
+  max-width: 84vw;
+}
+
+.poster-lightbox-img {
+  max-width: 84vw;
+  max-height: 78vh;
+  object-fit: contain;
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  background: rgba(255, 255, 255, 0.03);
+}
+
+.poster-lightbox-caption {
+  font-family: 'Geist Mono', monospace;
+  font-size: 12px;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: rgba(255, 255, 255, 0.75);
+}
+
+.poster-lightbox-close,
+.poster-lightbox-nav {
+  position: absolute;
+  border: 1px solid rgba(255, 255, 255, 0.25);
+  background: rgba(255, 255, 255, 0.04);
+  color: #FFFFFF;
+  border-radius: 50%;
+  width: 44px;
+  height: 44px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: border-color 0.25s var(--ease), background 0.25s var(--ease);
+}
+.poster-lightbox-close:hover,
+.poster-lightbox-nav:hover,
+.poster-lightbox-close:focus-visible,
+.poster-lightbox-nav:focus-visible {
+  border-color: var(--accent);
+  background: rgba(179, 64, 46, 0.25);
+}
+
+.poster-lightbox-close svg,
+.poster-lightbox-nav svg { width: 18px; height: 18px; }
+
+.poster-lightbox-close { top: 28px; right: 32px; }
+.poster-lightbox-prev { left: 28px; top: 50%; transform: translateY(-50%); }
+.poster-lightbox-next { right: 28px; top: 50%; transform: translateY(-50%); }
+
+/* ===========================================================
+   TESTIMONIALS
+   =========================================================== */
+.testimonials {
+  width: min(100%, 1440px);
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  padding: 100px 80px 120px;
+  gap: 56px;
+  border-top: 1px solid rgba(0, 0, 0, 0.121569);
+}
+
+.testimonial-grid {
+  width: 100%;
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 20px;
+}
+
+.testimonial-card {
+  border: 1px solid rgba(0, 0, 0, 0.121569);
+  background: #FFFFFF;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  opacity: 0;
+  transform: translateY(24px);
+  transition: opacity 0.7s var(--ease), transform 0.7s var(--ease);
+}
+
+.testimonial-card.in-view {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.testimonial-head {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.testimonial-photo {
+  width: 56px;
+  height: 56px;
+  border-radius: 50%;
+  object-fit: cover;
+  background: #ECECEA;
+  border: 1px solid rgba(0, 0, 0, 0.121569);
+}
+
+.testimonial-person h3 {
+  font-family: 'Geist Mono', monospace;
+  font-size: 12px;
+  line-height: 16px;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+}
+
+.testimonial-person p {
+  font-family: 'Geist Mono', monospace;
+  font-size: 11px;
+  line-height: 15px;
+  color: rgba(0, 0, 0, 0.6);
+}
+
+.testimonial-comment {
+  font-size: 15px;
+  line-height: 1.6;
+  color: #111111;
+}
+
+/* ===========================================================
+   ABOUT
+   =========================================================== */
+.about-grid {
+  padding: 0 clamp(20px, 5vw, 64px);
+  display: grid;
+  grid-template-columns: 0.8fr 1.2fr;
+  gap: 64px;
+  align-items: center;
+}
+
+@media (max-width: 800px) {
+  .about-grid { grid-template-columns: 1fr; }
+}
+
+.about-photo {
+  aspect-ratio: 4 / 5;
+  background: var(--bg-raised);
+  border: 1px solid var(--line);
+  overflow: hidden;
+  opacity: 0;
+  transform: translateY(24px);
+  transition: opacity 0.7s var(--ease), transform 0.7s var(--ease);
+}
+.about-photo.in-view { opacity: 1; transform: translateY(0); }
+.about-photo img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.about-text {
+  opacity: 0;
+  transform: translateY(24px);
+  transition: opacity 0.7s var(--ease) 0.1s, transform 0.7s var(--ease) 0.1s;
+}
+.about-text.in-view { opacity: 1; transform: translateY(0); }
+
+.about-text p {
+  font-size: 17px;
+  color: var(--text-muted);
+  max-width: 480px;
+}
+
+.about-facts {
+  list-style: none;
+  margin-top: 40px;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+.about-facts li {
+  font-family: var(--font-mono);
+  font-size: 13px;
+  border-top: 1px solid var(--line);
+  padding-top: 14px;
+}
+.about-facts li span {
+  color: var(--text-muted);
+  display: inline-block;
+  width: 140px;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  font-size: 11px;
+}
+
+/* ===========================================================
+   CONTACT
+   =========================================================== */
+.section-title {
+  font-family: 'Syne', sans-serif;
+  font-size: clamp(42px, 8vw, 96px);
+  line-height: 0.94;
+  font-weight: 800;
+  letter-spacing: -0.02em;
+  color: #000000;
+  position: relative;
+  z-index: 2;
+}
+
+.contact {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+}
+
+.contact-inner {
+  max-width: 920px;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 40px;
+  position: relative;
+  z-index: 2;
+}
+
+.contact-inner > p {
+  font-size: 18px;
+  line-height: 1.7;
+  color: rgba(0, 0, 0, 0.68);
+  max-width: 720px;
+}
+
+.contact-links {
+  width: 100%;
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 18px;
+}
+
+.contact-link {
+  border: 1px solid rgba(0, 0, 0, 0.16);
+  background: rgba(0, 0, 0, 0.01);
+  min-height: 132px;
+  padding: 18px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: 14px;
+  font-size: 16px;
+  line-height: 1.5;
+  color: #000000;
+  transition: border-color 0.25s var(--ease), transform 0.25s var(--ease), background 0.25s var(--ease);
+}
+
+.contact-link:hover {
+  border-color: rgba(0, 0, 0, 0.35);
+  transform: translateY(-2px);
+  background: rgba(0, 0, 0, 0.04);
+}
+
+.contact-link-label {
+  font-family: 'Geist Mono', monospace;
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: rgba(0, 0, 0, 0.48);
+}
+
+.contact-accent-circle {
+  position: absolute;
+  border: 1px solid rgba(0, 0, 0, 0.12);
+  border-radius: 50%;
+  width: 520px;
+  height: 520px;
+  right: -130px;
+  top: -170px;
+  z-index: 0;
+}
+
+.contact-accent-circle-2 {
+  width: 340px;
+  height: 340px;
+  right: 210px;
+  top: 260px;
+  opacity: 0.35;
+}
+
+.contact-diagonal-slash {
+  position: absolute;
+  width: 170px;
+  height: 0;
+  border: 1px solid rgba(0, 0, 0, 0.14);
+  right: 240px;
+  top: 200px;
+  transform: rotate(-40deg);
+  z-index: 1;
+}
+
+/* ===========================================================
+   PORTFOLIO BANNER
+   =========================================================== */
+.portfolio-banner {
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: flex-start;
+  padding: 48px 80px;
+  isolation: isolate;
+  position: relative;
+  width: min(100%, 1440px);
+  height: 520px;
+  margin: 0 auto;
+  background: #FFFFFF;
+  border-width: 0 0 1px;
+  border-style: solid;
+  border-color: rgba(0, 0, 0, 0.121569);
+  color: #000000;
+  overflow: hidden;
+}
+
+.geometric-accent-circle {
+  box-sizing: border-box;
+  position: absolute;
+  width: 440px;
+  height: 440px;
+  right: -60px;
+  top: -60px;
+  opacity: 0.08;
+  border: 1px solid #000000;
+  border-radius: 999px;
+  z-index: 0;
+}
+
+.geometric-diagonal-slash {
+  box-sizing: border-box;
+  position: absolute;
+  width: 120px;
+  height: 0;
+  right: 200px;
+  top: 275.15px;
+  opacity: 0.15;
+  border: 1px solid #000000;
+  transform: rotate(-45deg);
+  z-index: 1;
+}
+
+.top-metadata-strip {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0;
+  width: 100%;
+  min-height: 16px;
+  z-index: 2;
+}
+
+.left-brand-block {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  padding: 0;
+  gap: 12px;
+  min-height: 16px;
+}
+
+.brand-indicator {
+  font-family: 'Geist Mono', monospace;
+  font-style: normal;
+  font-weight: 600;
+  font-size: 12px;
+  line-height: 16px;
+  color: #000000;
+}
+
+.dot-separator {
+  width: 4px;
+  height: 4px;
+  background: #000000;
+  border-radius: 2px;
+}
+
+.year-indicator {
+  font-family: 'Geist Mono', monospace;
+  font-style: normal;
+  font-weight: 400;
+  font-size: 12px;
+  line-height: 16px;
+  color: #000000;
+  opacity: 0.6;
+}
+
+.masthead-container {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  padding: 0;
+  gap: 8px;
+  width: 100%;
+  max-width: 1280px;
+  z-index: 3;
+}
+
+.masthead-name {
+  width: 100%;
+  font-family: 'Syne', sans-serif;
+  font-style: normal;
+  font-weight: 800;
+  font-size: 104px;
+  line-height: 90%;
+  text-transform: uppercase;
+  color: #000000;
+}
+
+.conceptual-tagline-row {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  padding: 0;
+  gap: 16px;
+  width: 100%;
+  min-height: 18px;
+}
+
+.conceptual-line {
+  box-sizing: border-box;
+  width: 64px;
+  height: 0;
+  border: 1px solid #000000;
+}
+
+.conceptual-tagline {
+  font-family: 'Geist Mono', monospace;
+  font-style: normal;
+  font-weight: 500;
+  font-size: 14px;
+  line-height: 18px;
+  text-transform: uppercase;
+  color: #000000;
+}
+
+.bottom-strip {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: flex-end;
+  padding: 0;
+  width: 100%;
+  min-height: 40px;
+  z-index: 4;
+}
+
+.roles-cluster {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  padding: 0;
+  gap: 6px;
+  width: min(500px, 100%);
+}
+
+.roles-heading {
+  width: 100%;
+  font-family: 'Geist Mono', monospace;
+  font-style: normal;
+  font-weight: 600;
+  font-size: 11px;
+  line-height: 14px;
+  text-transform: uppercase;
+  color: #000000;
+  opacity: 0.4;
+}
+
+.roles-subtitle {
+  width: 100%;
+  font-family: 'Geist Mono', monospace;
+  font-style: normal;
+  font-weight: 400;
+  font-size: 15px;
+  line-height: 20px;
+  color: #000000;
+}
+
+.cta-block {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  padding: 0 0 4px;
+  gap: 12px;
+  color: #000000;
+}
+
+.cta-label {
+  font-family: 'Geist Mono', monospace;
+  font-style: normal;
+  font-weight: 600;
+  font-size: 13px;
+  line-height: 17px;
+  text-decoration-line: underline;
+  text-transform: uppercase;
+}
+
+.cta-arrow {
+  font-family: 'Geist Mono', monospace;
+  font-style: normal;
+  font-weight: 400;
+  font-size: 13px;
+  line-height: 17px;
+}
+
+@media (max-width: 1200px) {
+  .portfolio-banner {
+    padding: 40px 48px;
+    height: auto;
+    min-height: 520px;
+  }
+
+  .masthead-name {
+    font-size: clamp(56px, 9vw, 96px);
+  }
+}
+
+@media (max-width: 760px) {
+  .portfolio-banner {
+    padding: 28px 20px;
+    min-height: 430px;
+    height: auto;
+  }
+
+  .top-metadata-strip {
+    gap: 12px;
+    align-items: flex-start;
+    flex-direction: column;
+  }
+
+  .masthead-name {
+    font-size: clamp(44px, 15vw, 68px);
+  }
+
+  .bottom-strip {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 20px;
+  }
+
+  .roles-cluster {
+    width: 100%;
+  }
+
+  .geometric-accent-circle {
+    width: 280px;
+    height: 280px;
+    right: -80px;
+    top: -40px;
+  }
+
+  .geometric-diagonal-slash {
+    right: 24px;
+    top: 240px;
+  }
+}
+
+/* ===========================================================
+   FOOTER
+   =========================================================== */
+.site-footer {
+  width: min(100%, 1440px);
+  margin: 0 auto;
+  padding: 32px 80px;
+  border-top: 1px solid var(--line);
+  font-family: var(--font-mono);
+  font-size: 12px;
+  letter-spacing: 0.04em;
+  color: var(--text-muted);
+}
+
+@media (max-width: 1200px) {
+  .site-footer { padding: 28px 48px; }
+}
+
+@media (max-width: 760px) {
+  .site-footer { padding: 24px 20px; }
+}
+
+/* ===========================================================
+   SPEC LAYOUT OVERRIDES (DESKTOP)
+   =========================================================== */
+.reel,
+.work,
+.posters,
+.testimonials,
+.about,
+.contact {
+  width: min(100%, 1440px);
+  margin: 0 auto;
+}
+
+.work {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  padding: 100px 80px 120px;
+  gap: 56px;
+  min-height: auto;
+  border-top: none;
+}
+
+.work .section-label,
+.reel .section-label,
+.posters .section-label,
+.testimonials .section-label,
+.about .section-label,
+.contact .section-label {
+  padding: 0;
+  margin: 0;
+}
+
+.work .project-grid {
+  width: 100%;
+  padding: 0;
+}
+
+.reel {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  padding: 100px 80px 120px;
+  gap: 56px;
+  min-height: 808px;
+  border-top: 1px solid rgba(0, 0, 0, 0.121569);
+}
+
+.reel .reel-frame {
+  margin: 0;
+  width: 100%;
+}
+
+.about {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  padding: 100px 80px 120px;
+  gap: 56px;
+  min-height: 702px;
+  border-top: 1px solid rgba(0, 0, 0, 0.121569);
+}
+
+.about .about-grid {
+  width: 100%;
+  padding: 0;
+}
+
+.contact {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  padding: 120px 80px 64px;
+  gap: 80px;
+  min-height: 661px;
+  background: #FFFFFF;
+  color: #000000;
+  border-top: 1px solid rgba(0, 0, 0, 0.121569);
+}
+
+.contact .section-label,
+.contact .section-title,
+.contact .contact-inner,
+.contact .contact-links {
+  padding: 0;
+  margin-left: 0;
+  margin-right: 0;
+}
+
+@media (max-width: 1200px) {
+  .work,
+  .reel,
+  .posters,
+  .testimonials,
+  .about {
+    padding: 80px 48px 96px;
+  }
+
+  .contact {
+    padding: 96px 48px 56px;
+    gap: 64px;
+  }
+
+  .work,
+  .reel,
+  .posters,
+  .testimonials,
+  .about,
+  .contact {
+    min-height: auto;
+    height: auto;
+  }
+}
+
+@media (max-width: 760px) {
+  .work,
+  .reel,
+  .posters,
+  .testimonials,
+  .about {
+    padding: 64px 20px 80px;
+    gap: 40px;
+  }
+
+  .contact {
+    padding: 72px 20px 48px;
+    gap: 40px;
+  }
+
+  .contact-links {
+    grid-template-columns: 1fr;
+  }
+
+  .contact-link {
+    min-height: 108px;
+  }
+
+  .contact-accent-circle {
+    width: 280px;
+    height: 280px;
+    right: -120px;
+    top: -70px;
+  }
+
+  .contact-accent-circle-2,
+  .contact-diagonal-slash {
+    display: none;
+  }
+
+  .testimonial-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .poster-wheel-wrap {
+    padding: 8px 8px 72px;
+  }
+
+  .poster-wheel {
+    height: 420px;
+  }
+
+  .poster-wheel-item {
+    width: 200px;
+    transform:
+      translateX(calc(var(--offset) * 100px))
+      translateY(calc(min(abs(var(--offset)), 4) * 12px))
+      rotate(calc(var(--offset) * 8deg))
+      scale(calc(1 - min(abs(var(--offset)), 4) * 0.05));
+  }
+
+  .poster-wheel-item.is-active {
+    transform: translateX(0) translateY(-20px) rotate(0deg) scale(1.06);
+  }
+
+  .echo-title { font-size: clamp(32px, 11vw, 56px); }
+  .motion-title-wrap { padding-bottom: 16px; }
+  .photography { padding: 64px 20px 80px; }
+
+  .photo-wheel { height: 440px; }
+  .photo-wheel-item {
+    width: 210px;
+    transform:
+      translateY(calc(var(--offset) * 100px))
+      translateX(calc(min(abs(var(--offset)), 4) * 10px))
+      rotate(calc(var(--offset) * -5deg))
+      scale(calc(1 - min(abs(var(--offset)), 4) * 0.06));
+  }
+  .photo-wheel-item.is-active {
+    transform: translateY(0) translateX(0) rotate(0deg) scale(1.06);
+  }
+
+  .poster-wheel-arrow {
+    right: 50%;
+    top: auto;
+    bottom: 0;
+    transform: translate(50%, 0);
+  }
+  .poster-wheel-arrow:hover,
+  .poster-wheel-arrow:focus-visible {
+    transform: translate(50%, 0) scale(1.06);
+  }
+
+  .poster-wheel-accent-circle { width: 220px; height: 220px; right: -90px; top: -60px; }
+  .poster-wheel-accent-circle-2 { width: 140px; height: 140px; left: 10px; bottom: 20px; }
+}
+
+@media (min-width: 761px) and (max-width: 1100px) {
+  .testimonial-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .contact-links {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .poster-wheel { height: 500px; }
+  .poster-wheel-item {
+    width: 260px;
+    transform:
+      translateX(calc(var(--offset) * 142px))
+      translateY(calc(min(abs(var(--offset)), 4) * 16px))
+      rotate(calc(var(--offset) * 9deg))
+      scale(calc(1 - min(abs(var(--offset)), 4) * 0.05));
+  }
+  .poster-wheel-item.is-active {
+    transform: translateX(0) translateY(-26px) rotate(0deg) scale(1.06);
+  }
+
+  .photo-wheel { height: 500px; }
+  .photo-wheel-item { width: 240px; }
+}
+  </style>
+</head>
+<body>
+
+  <!-- Scrub bar: fills as you scroll, like a timeline progress bar -->
+  <div class="scrub-bar" id="scrubBar"><div class="scrub-fill" id="scrubFill"></div></div>
+
+  <header class="nav">
+    <a href="#" class="nav-logo">Moses Ngaru</a>
+    <nav class="nav-links">
+      <a href="#work">Work</a>
+      <a href="#photography">Photography</a>
+      <a href="#posters">Posters</a>
+      <a href="#testimonials">Testimonials</a>
+      <a href="#about">About me</a>
+      <a href="#contact">Contact</a>
+    </nav>
+  </header>
+
+  <!-- PORTFOLIO BANNER -->
+  <section class="portfolio-banner">
+    <div class="geometric-accent-circle" aria-hidden="true"></div>
+    <div class="geometric-diagonal-slash" aria-hidden="true"></div>
+
+    <div class="top-metadata-strip">
+      <div class="left-brand-block">
+        <span class="brand-indicator">Ngarugem Reels</span>
+        <span class="dot-separator" aria-hidden="true"></span>
+        <span class="year-indicator">2026</span>
+      </div>
+      <span class="year-indicator timecode" id="timecode">00:00:00:00</span>
+    </div>
+
+    <div class="masthead-container">
+      <h1 class="masthead-name">Moses<br>Ngaru</h1>
+      <div class="conceptual-tagline-row">
+        <span class="conceptual-line" aria-hidden="true"></span>
+        <p class="conceptual-tagline">Photographer / Videographer / Editor</p>
+      </div>
+    </div>
+
+    <div class="bottom-strip">
+      <div class="roles-cluster">
+        <p class="roles-subtitle">Photography, Graphic Design, Video Editing, Videography</p>
+      </div>
+      <a href="#work" class="cta-block" aria-label="View selected work">
+        <span class="cta-label">View My Work</span>
+          <span class="cta-arrow">-&gt;</span>
+      </a>
+    </div>
+  </section>
+
+  <!-- WORK -->
+  <section class="work" id="work">
+    <p class="section-label">01 / Short Form Content</p>
+
+    <div class="feature-intro">
+      <div class="motion-title-wrap">
+        <h2 class="echo-title">Short Content.</h2>
+      </div>
+      <p class="feature-intro-text">
+        Editing for Reels and TikTok — cutting and arranging clips to fit short
+        durations, syncing to trending audio, and making sure every video grabs
+        attention in the first second.
+      </p>
+    </div>
+
+    <div class="project-grid">
+
+      <article class="project-card" data-reveal>
+        <div class="project-thumb-stack">
+          <div class="project-thumb-tab project-thumb-tab-1" aria-hidden="true"></div>
+          <div class="project-thumb-tab project-thumb-tab-2" aria-hidden="true"></div>
+          <div class="project-thumb">
+            <!-- PLACEHOLDER: Project 1 poster image + video filenames -->
+            <video muted loop playsinline preload="none" poster="REPLACE-WITH-PROJECT-1-POSTER.jpg">
+              <source src="REPLACE-WITH-PROJECT-1.mp4" type="video/mp4" />
+            </video>
+            <div class="project-scrub"><div class="project-scrub-fill"></div></div>
+          </div>
+        </div>
+        <div class="project-meta">
+          <h3>Project Title One</h3>
+          <p class="project-tags">Music Video · 2026</p>
+        </div>
+      </article>
+
+      <article class="project-card" data-reveal>
+        <div class="project-thumb-stack">
+          <div class="project-thumb-tab project-thumb-tab-1" aria-hidden="true"></div>
+          <div class="project-thumb-tab project-thumb-tab-2" aria-hidden="true"></div>
+          <div class="project-thumb">
+            <!-- PLACEHOLDER: Project 2 poster image + video filenames -->
+            <video muted loop playsinline preload="none" poster="REPLACE-WITH-PROJECT-2-POSTER.jpg">
+              <source src="REPLACE-WITH-PROJECT-2.mp4" type="video/mp4" />
+            </video>
+            <div class="project-scrub"><div class="project-scrub-fill"></div></div>
+          </div>
+        </div>
+        <div class="project-meta">
+          <h3>Project Title Two</h3>
+          <p class="project-tags">Brand Film · 2025</p>
+        </div>
+      </article>
+
+      <article class="project-card" data-reveal>
+        <div class="project-thumb-stack">
+          <div class="project-thumb-tab project-thumb-tab-1" aria-hidden="true"></div>
+          <div class="project-thumb-tab project-thumb-tab-2" aria-hidden="true"></div>
+          <div class="project-thumb">
+            <!-- PLACEHOLDER: Project 3 poster image + video filenames -->
+            <video muted loop playsinline preload="none" poster="REPLACE-WITH-PROJECT-3-POSTER.jpg">
+              <source src="REPLACE-WITH-PROJECT-3.mp4" type="video/mp4" />
+            </video>
+            <div class="project-scrub"><div class="project-scrub-fill"></div></div>
+          </div>
+        </div>
+        <div class="project-meta">
+          <h3>Project Title Three</h3>
+          <p class="project-tags">Documentary · 2025</p>
+        </div>
+      </article>
+
+      <article class="project-card" data-reveal>
+        <div class="project-thumb-stack">
+          <div class="project-thumb-tab project-thumb-tab-1" aria-hidden="true"></div>
+          <div class="project-thumb-tab project-thumb-tab-2" aria-hidden="true"></div>
+          <div class="project-thumb">
+            <!-- PLACEHOLDER: Project 4 poster image + video filenames -->
+            <video muted loop playsinline preload="none" poster="REPLACE-WITH-PROJECT-4-POSTER.jpg">
+              <source src="REPLACE-WITH-PROJECT-4.mp4" type="video/mp4" />
+            </video>
+            <div class="project-scrub"><div class="project-scrub-fill"></div></div>
+          </div>
+        </div>
+        <div class="project-meta">
+          <h3>Project Title Four</h3>
+          <p class="project-tags">Short Film · 2024</p>
+        </div>
+      </article>
+
+    </div>
+  </section>
+
+  <!-- PHOTOGRAPHY -->
+  <section class="photography" id="photography">
+    <p class="section-label">02 / Photography</p>
+
+    <div class="photography-layout">
+      <div class="photography-intro">
+        <div class="motion-title-wrap">
+          <h2 class="echo-title">Photography</h2>
+        </div>
+        <p class="photography-intro-text">
+          A running collection of personal and client shoots — framing,
+          light, and moment captured on location, then edited to keep a
+          consistent eye across every set.
+        </p>
+      </div>
+
+    <div class="photo-wheel-wrap" data-reveal>
+      <div class="photo-wheel">
+        <div class="photo-wheel-track" id="photoWheelTrack" role="listbox" aria-label="Photography gallery — use arrow keys to browse, Enter to preview">
+
+          <!-- PLACEHOLDER: Photo 01 filename -->
+          <button class="photo-wheel-item" type="button" role="option" data-title="Photo 01" aria-label="Photo 01">
+            <img class="photo-wheel-img" src="REPLACE-WITH-PHOTO-01.jpg" alt="Photography sample 01" />
+            <span class="photo-wheel-placeholder">Photo 01 Preview</span>
+            <span class="photo-wheel-title">Photo 01</span>
+          </button>
+
+          <!-- PLACEHOLDER: Photo 02 filename -->
+          <button class="photo-wheel-item" type="button" role="option" data-title="Photo 02" aria-label="Photo 02">
+            <img class="photo-wheel-img" src="REPLACE-WITH-PHOTO-02.jpg" alt="Photography sample 02" />
+            <span class="photo-wheel-placeholder">Photo 02 Preview</span>
+            <span class="photo-wheel-title">Photo 02</span>
+          </button>
+
+          <!-- PLACEHOLDER: Photo 03 filename -->
+          <button class="photo-wheel-item" type="button" role="option" data-title="Photo 03" aria-label="Photo 03">
+            <img class="photo-wheel-img" src="REPLACE-WITH-PHOTO-03.jpg" alt="Photography sample 03" />
+            <span class="photo-wheel-placeholder">Photo 03 Preview</span>
+            <span class="photo-wheel-title">Photo 03</span>
+          </button>
+
+          <!-- PLACEHOLDER: Photo 04 filename -->
+          <button class="photo-wheel-item" type="button" role="option" data-title="Photo 04" aria-label="Photo 04">
+            <img class="photo-wheel-img" src="REPLACE-WITH-PHOTO-04.jpg" alt="Photography sample 04" />
+            <span class="photo-wheel-placeholder">Photo 04 Preview</span>
+            <span class="photo-wheel-title">Photo 04</span>
+          </button>
+
+          <!-- PLACEHOLDER: Photo 05 filename -->
+          <button class="photo-wheel-item" type="button" role="option" data-title="Photo 05" aria-label="Photo 05">
+            <img class="photo-wheel-img" src="REPLACE-WITH-PHOTO-05.jpg" alt="Photography sample 05" />
+            <span class="photo-wheel-placeholder">Photo 05 Preview</span>
+            <span class="photo-wheel-title">Photo 05</span>
+          </button>
+
+          <!-- PLACEHOLDER: Photo 06 filename -->
+          <button class="photo-wheel-item" type="button" role="option" data-title="Photo 06" aria-label="Photo 06">
+            <img class="photo-wheel-img" src="REPLACE-WITH-PHOTO-06.jpg" alt="Photography sample 06" />
+            <span class="photo-wheel-placeholder">Photo 06 Preview</span>
+            <span class="photo-wheel-title">Photo 06</span>
+          </button>
+
+          <!-- To add more photos: copy one <button class="photo-wheel-item"> block above and update its src, alt, and data-title -->
+
+        </div>
+      </div>
+
+      <button class="photo-wheel-arrow" id="photoWheelArrow" type="button" aria-label="Show next photo">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M9 6l6 6-6 6" stroke-linecap="round" stroke-linejoin="round" /></svg>
+      </button>
+    </div>
+    </div>
+  </section>
+
+  <!-- PHOTOGRAPHY FULL PREVIEW LIGHTBOX -->
+  <div class="poster-lightbox" id="photoLightbox" aria-hidden="true">
+    <button class="poster-lightbox-close" id="photoLightboxClose" type="button" aria-label="Close preview">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M6 6l12 12M18 6L6 18" stroke-linecap="round" /></svg>
+    </button>
+    <button class="poster-lightbox-nav poster-lightbox-prev" id="photoLightboxPrev" type="button" aria-label="Previous photo">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M15 6l-6 6 6 6" stroke-linecap="round" stroke-linejoin="round" /></svg>
+    </button>
+    <figure class="poster-lightbox-figure">
+      <img class="poster-lightbox-img" id="photoLightboxImg" src="" alt="" />
+      <figcaption class="poster-lightbox-caption" id="photoLightboxCaption"></figcaption>
+    </figure>
+    <button class="poster-lightbox-nav poster-lightbox-next" id="photoLightboxNext" type="button" aria-label="Next photo">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M9 6l6 6-6 6" stroke-linecap="round" stroke-linejoin="round" /></svg>
+    </button>
+  </div>
+
+  <!-- POSTERS -->
+  <section class="posters" id="posters">
+    <p class="section-label">03 / Posters</p>
+    <p class="section-intro">Poster gallery curated directly in code.</p>
+
+    <div class="poster-wheel-wrap" data-reveal>
+      <div class="poster-wheel-accent-circle" aria-hidden="true"></div>
+      <div class="poster-wheel-accent-circle poster-wheel-accent-circle-2" aria-hidden="true"></div>
+
+      <div class="poster-wheel">
+        <div class="poster-wheel-track" id="posterWheelTrack" role="listbox" aria-label="Poster gallery — use arrow keys to browse, Enter to preview">
+
+          <!-- PLACEHOLDER: Poster 01 image filename -->
+          <button class="poster-wheel-item" type="button" role="option" data-title="Poster 01" aria-label="Poster 01">
+            <img class="poster-wheel-img" src="REPLACE-WITH-POSTER-01.jpg" alt="Poster 01 preview" />
+            <span class="poster-wheel-placeholder">Poster 01 Preview</span>
+            <span class="poster-wheel-title">Poster 01</span>
+          </button>
+
+          <!-- PLACEHOLDER: Poster 02 image filename -->
+          <button class="poster-wheel-item" type="button" role="option" data-title="Poster 02" aria-label="Poster 02">
+            <img class="poster-wheel-img" src="REPLACE-WITH-POSTER-02.jpg" alt="Poster 02 preview" />
+            <span class="poster-wheel-placeholder">Poster 02 Preview</span>
+            <span class="poster-wheel-title">Poster 02</span>
+          </button>
+
+          <!-- PLACEHOLDER: Poster 03 image filename -->
+          <button class="poster-wheel-item" type="button" role="option" data-title="Poster 03" aria-label="Poster 03">
+            <img class="poster-wheel-img" src="REPLACE-WITH-POSTER-03.jpg" alt="Poster 03 preview" />
+            <span class="poster-wheel-placeholder">Poster 03 Preview</span>
+            <span class="poster-wheel-title">Poster 03</span>
+          </button>
+
+          <!-- PLACEHOLDER: Poster 04 image filename -->
+          <button class="poster-wheel-item" type="button" role="option" data-title="Poster 04" aria-label="Poster 04">
+            <img class="poster-wheel-img" src="REPLACE-WITH-POSTER-04.jpg" alt="Poster 04 preview" />
+            <span class="poster-wheel-placeholder">Poster 04 Preview</span>
+            <span class="poster-wheel-title">Poster 04</span>
+          </button>
+
+          <!-- PLACEHOLDER: Poster 05 image filename -->
+          <button class="poster-wheel-item" type="button" role="option" data-title="Poster 05" aria-label="Poster 05">
+            <img class="poster-wheel-img" src="REPLACE-WITH-POSTER-05.jpg" alt="Poster 05 preview" />
+            <span class="poster-wheel-placeholder">Poster 05 Preview</span>
+            <span class="poster-wheel-title">Poster 05</span>
+          </button>
+
+          <!-- PLACEHOLDER: Poster 06 image filename -->
+          <button class="poster-wheel-item" type="button" role="option" data-title="Poster 06" aria-label="Poster 06">
+            <img class="poster-wheel-img" src="REPLACE-WITH-POSTER-06.jpg" alt="Poster 06 preview" />
+            <span class="poster-wheel-placeholder">Poster 06 Preview</span>
+            <span class="poster-wheel-title">Poster 06</span>
+          </button>
+
+          <!-- PLACEHOLDER: Poster 07 image filename -->
+          <button class="poster-wheel-item" type="button" role="option" data-title="Poster 07" aria-label="Poster 07">
+            <img class="poster-wheel-img" src="REPLACE-WITH-POSTER-07.jpg" alt="Poster 07 preview" />
+            <span class="poster-wheel-placeholder">Poster 07 Preview</span>
+            <span class="poster-wheel-title">Poster 07</span>
+          </button>
+
+          <!-- PLACEHOLDER: Poster 08 image filename -->
+          <button class="poster-wheel-item" type="button" role="option" data-title="Poster 08" aria-label="Poster 08">
+            <img class="poster-wheel-img" src="REPLACE-WITH-POSTER-08.jpg" alt="Poster 08 preview" />
+            <span class="poster-wheel-placeholder">Poster 08 Preview</span>
+            <span class="poster-wheel-title">Poster 08</span>
+          </button>
+
+          <!-- PLACEHOLDER: Poster 09 image filename -->
+          <button class="poster-wheel-item" type="button" role="option" data-title="Poster 09" aria-label="Poster 09">
+            <img class="poster-wheel-img" src="REPLACE-WITH-POSTER-09.jpg" alt="Poster 09 preview" />
+            <span class="poster-wheel-placeholder">Poster 09 Preview</span>
+            <span class="poster-wheel-title">Poster 09</span>
+          </button>
+
+          <!-- PLACEHOLDER: Poster 10 image filename -->
+          <button class="poster-wheel-item" type="button" role="option" data-title="Poster 10" aria-label="Poster 10">
+            <img class="poster-wheel-img" src="REPLACE-WITH-POSTER-10.jpg" alt="Poster 10 preview" />
+            <span class="poster-wheel-placeholder">Poster 10 Preview</span>
+            <span class="poster-wheel-title">Poster 10</span>
+          </button>
+
+          <!-- PLACEHOLDER: Poster 11 image filename -->
+          <button class="poster-wheel-item" type="button" role="option" data-title="Poster 11" aria-label="Poster 11">
+            <img class="poster-wheel-img" src="REPLACE-WITH-POSTER-11.jpg" alt="Poster 11 preview" />
+            <span class="poster-wheel-placeholder">Poster 11 Preview</span>
+            <span class="poster-wheel-title">Poster 11</span>
+          </button>
+
+          <!-- PLACEHOLDER: Poster 12 image filename -->
+          <button class="poster-wheel-item" type="button" role="option" data-title="Poster 12" aria-label="Poster 12">
+            <img class="poster-wheel-img" src="REPLACE-WITH-POSTER-12.jpg" alt="Poster 12 preview" />
+            <span class="poster-wheel-placeholder">Poster 12 Preview</span>
+            <span class="poster-wheel-title">Poster 12</span>
+          </button>
+
+          <!-- To add more posters: copy one <button class="poster-wheel-item"> block above and update its src, alt, and data-title -->
+
+        </div>
+      </div>
+
+      <button class="poster-wheel-arrow" id="posterPreviewArrow" type="button" aria-label="Show next poster">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M9 6l6 6-6 6" stroke-linecap="round" stroke-linejoin="round" /></svg>
+      </button>
+    </div>
+  </section>
+
+  <!-- POSTER FULL PREVIEW LIGHTBOX -->
+  <div class="poster-lightbox" id="posterLightbox" aria-hidden="true">
+    <button class="poster-lightbox-close" id="posterLightboxClose" type="button" aria-label="Close preview">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M6 6l12 12M18 6L6 18" stroke-linecap="round" /></svg>
+    </button>
+    <button class="poster-lightbox-nav poster-lightbox-prev" id="posterLightboxPrev" type="button" aria-label="Previous poster">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M15 6l-6 6 6 6" stroke-linecap="round" stroke-linejoin="round" /></svg>
+    </button>
+    <figure class="poster-lightbox-figure">
+      <img class="poster-lightbox-img" id="posterLightboxImg" src="" alt="" />
+      <figcaption class="poster-lightbox-caption" id="posterLightboxCaption"></figcaption>
+    </figure>
+    <button class="poster-lightbox-nav poster-lightbox-next" id="posterLightboxNext" type="button" aria-label="Next poster">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M9 6l6 6-6 6" stroke-linecap="round" stroke-linejoin="round" /></svg>
+    </button>
+  </div>
+
+  <!-- TESTIMONIALS -->
+  <section class="testimonials" id="testimonials">
+    <p class="section-label">04 / Testimonials</p>
+    <div class="testimonial-grid">
+      <article class="testimonial-card" data-reveal>
+        <div class="testimonial-head">
+          <!-- PLACEHOLDER: Testimonial 1 headshot filename -->
+          <img class="testimonial-photo" src="REPLACE-WITH-TESTIMONIAL-1.jpg" alt="Photo of Alex M" />
+          <div class="testimonial-person">
+            <h3>Alex M</h3>
+            <p>Creative Director</p>
+          </div>
+        </div>
+        <p class="testimonial-comment">Working with them was smooth from pre-production through final export. Every cut felt intentional and elevated the campaign.</p>
+      </article>
+
+      <article class="testimonial-card" data-reveal>
+        <div class="testimonial-head">
+          <!-- PLACEHOLDER: Testimonial 2 headshot filename -->
+          <img class="testimonial-photo" src="REPLACE-WITH-TESTIMONIAL-2.jpg" alt="Photo of Rina K" />
+          <div class="testimonial-person">
+            <h3>Rina K</h3>
+            <p>Artist Manager</p>
+          </div>
+        </div>
+        <p class="testimonial-comment">They quickly understood our visual language and delivered edits that felt cinematic while still true to the artist story.</p>
+      </article>
+
+      <article class="testimonial-card" data-reveal>
+        <div class="testimonial-head">
+          <!-- PLACEHOLDER: Testimonial 3 headshot filename -->
+          <img class="testimonial-photo" src="REPLACE-WITH-TESTIMONIAL-3.jpg" alt="Photo of Idris T" />
+          <div class="testimonial-person">
+            <h3>Idris T</h3>
+            <p>Brand Producer</p>
+          </div>
+        </div>
+        <p class="testimonial-comment">Fast communication, clean deliverables, and strong storytelling instincts. We will definitely collaborate again.</p>
+      </article>
+    </div>
+  </section>
+
+  <!-- ABOUT -->
+  <section class="about" id="about">
+    <p class="section-label">05 / About</p>
+    <div class="about-grid">
+      <div class="about-photo" data-reveal>
+        <!-- PLACEHOLDER: portrait/profile photo filename -->
+        <img src="REPLACE-WITH-PORTRAIT.jpg" alt="Portrait of the videographer" />
+      </div>
+      <div class="about-text" data-reveal>
+        <p>
+          Write a short bio here — two or three sentences about how they got into
+          video, what kind of stories they like to tell, and the tools or style
+          they shoot and edit with. Keep it in their voice, not a resume.
+        </p>
+        <ul class="about-facts">
+          <li><span>Based in</span> Nairobi, Kenya</li>
+          <li><span>Tools</span> Capcut</li>
+          <li><span>Available for</span> Freelance &amp; collaborations</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- CONTACT -->
+  <section class="contact" id="contact">
+    <div class="contact-accent-circle" aria-hidden="true"></div>
+    <div class="contact-accent-circle contact-accent-circle-2" aria-hidden="true"></div>
+    <div class="contact-diagonal-slash" aria-hidden="true"></div>
+
+    <p class="section-label">Get in Touch</p>
+    <h2 class="section-title">Let's talk.</h2>
+
+    <div class="contact-inner">
+      <p>Whether it's a project, a collaboration, or just a conversation - reach out.</p>
+
+      <div class="contact-links">
+        <a class="contact-link" href="mailto:magdalene.w.wanjiku@gmail.com">
+          <span class="contact-link-label">Email</span>
+          magdalene.w.wanjiku@gmail.com
+        </a>
+
+        <a class="contact-link" href="tel:+254715778399">
+          <span class="contact-link-label">Phone</span>
+          0715 778 399
+        </a>
+
+        <a class="contact-link" href="https://www.linkedin.com/in/wangari-magdaline/" target="_blank" rel="noopener">
+          <span class="contact-link-label">LinkedIn</span>
+          linkedin.com/in/wangari-magdaline
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <footer class="site-footer">
+    <p>&copy; <span id="year"></span> Moses Ngaru. All rights reserved.</p>
+  </footer>
+
+  <script>
+// ===========================================================
+// Scrub bar: fills based on scroll progress
+// ===========================================================
+const scrubFill = document.getElementById('scrubFill');
+
+function updateScrub() {
+  const scrollTop = window.scrollY;
+  const docHeight = document.documentElement.scrollHeight - window.innerHeight;
+  const pct = docHeight > 0 ? (scrollTop / docHeight) * 100 : 0;
+  scrubFill.style.width = pct + '%';
+}
+window.addEventListener('scroll', updateScrub);
+updateScrub();
+
+// ===========================================================
+// Hero timecode: ticks like a running camera clock (HH:MM:SS:FF)
+// ===========================================================
+const timecodeEl = document.getElementById('timecode');
+let frame = 0;
+const FPS = 24;
+
+function tickTimecode() {
+  frame++;
+  const totalSeconds = Math.floor(frame / FPS);
+  const ff = frame % FPS;
+  const hh = Math.floor(totalSeconds / 3600);
+  const mm = Math.floor((totalSeconds % 3600) / 60);
+  const ss = totalSeconds % 60;
+
+  const pad = (n) => String(n).padStart(2, '0');
+  if (timecodeEl) {
+    timecodeEl.textContent = `${pad(hh)}:${pad(mm)}:${pad(ss)}:${pad(ff)}`;
+  }
+}
+setInterval(tickTimecode, 1000 / FPS);
+
+// ===========================================================
+// Scroll reveal for cards / about block
+// ===========================================================
+const revealTargets = document.querySelectorAll('[data-reveal], .project-card, .about-photo, .about-text');
+
+const revealObserver = new IntersectionObserver((entries) => {
+  entries.forEach((entry) => {
+    if (entry.isIntersecting) {
+      entry.target.classList.add('in-view');
+      revealObserver.unobserve(entry.target);
+    }
+  });
+}, { threshold: 0.15 });
+
+revealTargets.forEach((el) => revealObserver.observe(el));
+
+// ===========================================================
+// Project thumbnails: play + scrub on hover, reset on leave
+// ===========================================================
+document.querySelectorAll('.project-card').forEach((card) => {
+  const video = card.querySelector('video');
+  const scrubFillEl = card.querySelector('.project-scrub-fill');
+
+  if (!video) return;
+
+  card.addEventListener('mouseenter', () => {
+    video.currentTime = 0;
+    video.play().catch(() => {});
+  });
+
+  card.addEventListener('mouseleave', () => {
+    video.pause();
+    video.currentTime = 0;
+    if (scrubFillEl) scrubFillEl.style.width = '0%';
+  });
+
+  video.addEventListener('timeupdate', () => {
+    if (!video.duration || !scrubFillEl) return;
+    const pct = (video.currentTime / video.duration) * 100;
+    scrubFillEl.style.width = pct + '%';
+  });
+});
+
+// ===========================================================
+// Footer year
+// ===========================================================
+const yearEl = document.getElementById('year');
+if (yearEl) yearEl.textContent = new Date().getFullYear();
+
+// ===========================================================
+// Coverflow-style wheel (used by both the horizontal poster wheel
+// and the vertical photo wheel) + its full preview lightbox
+// ===========================================================
+function initWheel({
+  trackId, arrowId, itemSelector,
+  lightboxId, lightboxImgId, lightboxCaptionId,
+  lightboxCloseId, lightboxPrevId, lightboxNextId,
+  axis, // 'x' for horizontal (poster wheel), 'y' for vertical (photo wheel)
+}) {
+  const track = document.getElementById(trackId);
+  const arrowBtn = document.getElementById(arrowId);
+  const lightbox = document.getElementById(lightboxId);
+  const lightboxImg = document.getElementById(lightboxImgId);
+  const lightboxCaption = document.getElementById(lightboxCaptionId);
+  const lightboxClose = document.getElementById(lightboxCloseId);
+  const lightboxPrev = document.getElementById(lightboxPrevId);
+  const lightboxNext = document.getElementById(lightboxNextId);
+
+  if (!track || !arrowBtn || !lightbox) return;
+
+  const items = Array.from(track.querySelectorAll(itemSelector));
+  if (items.length === 0) return;
+
+  const pointerAxis = axis === 'y' ? 'clientY' : 'clientX';
+  const nextKey = axis === 'y' ? 'ArrowDown' : 'ArrowRight';
+  const prevKey = axis === 'y' ? 'ArrowUp' : 'ArrowLeft';
+
+  let activeIndex = 0;
+
+  function layoutWheel() {
+    items.forEach((item, i) => {
+      const offset = i - activeIndex;
+      item.style.setProperty('--offset', offset);
+      const isActive = offset === 0;
+      item.classList.toggle('is-active', isActive);
+      item.setAttribute('aria-selected', isActive ? 'true' : 'false');
+      item.tabIndex = isActive ? 0 : -1;
+    });
+  }
+
+  function setActive(index) {
+    activeIndex = (index + items.length) % items.length;
+    layoutWheel();
+  }
+
+  items.forEach((item, i) => {
+    item.addEventListener('click', () => {
+      // A drag that just repositioned the wheel shouldn't also register as a
+      // tap on whatever card ended up under the cursor.
+      if (didDrag) {
+        didDrag = false;
+        return;
+      }
+      if (i === activeIndex) {
+        openLightbox(i);
+      } else {
+        setActive(i);
+      }
+    });
+  });
+
+  // Drag / swipe across the wheel to rotate it
+  let dragStart = null;
+  let didDrag = false;
+  const DRAG_THRESHOLD = 10; // px of movement before it counts as a drag, not a tap
+  const SWIPE_THRESHOLD = 40; // px of movement needed to advance the wheel
+
+  track.addEventListener('pointerdown', (e) => {
+    dragStart = e[pointerAxis];
+    didDrag = false;
+  });
+  window.addEventListener('pointermove', (e) => {
+    if (dragStart === null) return;
+    if (Math.abs(e[pointerAxis] - dragStart) > DRAG_THRESHOLD) didDrag = true;
+  });
+  window.addEventListener('pointerup', (e) => {
+    if (dragStart === null) return;
+    const delta = e[pointerAxis] - dragStart;
+    if (Math.abs(delta) > SWIPE_THRESHOLD) {
+      setActive(activeIndex + (delta < 0 ? 1 : -1));
+    }
+    dragStart = null;
+  });
+
+  // Keyboard navigation while the wheel has focus
+  track.addEventListener('keydown', (e) => {
+    if (e.key === nextKey) { e.preventDefault(); setActive(activeIndex + 1); }
+    if (e.key === prevKey) { e.preventDefault(); setActive(activeIndex - 1); }
+    if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); openLightbox(activeIndex); }
+  });
+
+  function openLightbox(index) {
+    activeIndex = index;
+    layoutWheel();
+    const img = items[index].querySelector('img');
+    lightboxImg.src = img ? img.getAttribute('src') || '' : '';
+    lightboxImg.alt = img ? img.getAttribute('alt') || '' : '';
+    lightboxCaption.textContent = items[index].dataset.title || '';
+    lightbox.classList.add('is-open');
+    lightbox.setAttribute('aria-hidden', 'false');
+    lightboxClose.focus();
+    document.body.style.overflow = 'hidden';
+  }
+
+  function closeLightbox() {
+    lightbox.classList.remove('is-open');
+    lightbox.setAttribute('aria-hidden', 'true');
+    document.body.style.overflow = '';
+    arrowBtn.focus();
+  }
+
+  // Arrow advances the wheel: the next item becomes the front card,
+  // the current front card gets pushed back into the stack.
+  arrowBtn.addEventListener('click', () => setActive(activeIndex + 1));
+  lightboxClose.addEventListener('click', closeLightbox);
+  lightboxPrev.addEventListener('click', () => openLightbox((activeIndex - 1 + items.length) % items.length));
+  lightboxNext.addEventListener('click', () => openLightbox((activeIndex + 1) % items.length));
+
+  lightbox.addEventListener('click', (e) => {
+    if (e.target === lightbox) closeLightbox();
+  });
+
+  document.addEventListener('keydown', (e) => {
+    if (!lightbox.classList.contains('is-open')) return;
+    if (e.key === 'Escape') closeLightbox();
+    if (e.key === nextKey) openLightbox((activeIndex + 1) % items.length);
+    if (e.key === prevKey) openLightbox((activeIndex - 1 + items.length) % items.length);
+  });
+
+  layoutWheel();
+}
+
+initWheel({
+  trackId: 'posterWheelTrack',
+  arrowId: 'posterPreviewArrow',
+  itemSelector: '.poster-wheel-item',
+  lightboxId: 'posterLightbox',
+  lightboxImgId: 'posterLightboxImg',
+  lightboxCaptionId: 'posterLightboxCaption',
+  lightboxCloseId: 'posterLightboxClose',
+  lightboxPrevId: 'posterLightboxPrev',
+  lightboxNextId: 'posterLightboxNext',
+  axis: 'x',
+});
+
+initWheel({
+  trackId: 'photoWheelTrack',
+  arrowId: 'photoWheelArrow',
+  itemSelector: '.photo-wheel-item',
+  lightboxId: 'photoLightbox',
+  lightboxImgId: 'photoLightboxImg',
+  lightboxCaptionId: 'photoLightboxCaption',
+  lightboxCloseId: 'photoLightboxClose',
+  lightboxPrevId: 'photoLightboxPrev',
+  lightboxNextId: 'photoLightboxNext',
+  axis: 'y',
+});
+  </script>
+</body>
+</html>
