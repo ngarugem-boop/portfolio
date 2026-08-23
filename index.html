@@ -130,14 +130,61 @@ img, video { display: block; max-width: 100%; }
 }
 .nav-links a:hover::after { width: 100%; }
 
+.nav-toggle {
+  display: none;
+  flex-direction: column;
+  justify-content: center;
+  gap: 5px;
+  width: 32px;
+  height: 32px;
+  border: none;
+  background: transparent;
+  cursor: pointer;
+  z-index: 30;
+}
+.nav-toggle span {
+  display: block;
+  width: 100%;
+  height: 1.5px;
+  background: #000000;
+  transition: transform 0.25s var(--ease), opacity 0.25s var(--ease);
+}
+.nav-toggle.is-open span:nth-child(1) { transform: translateY(6.5px) rotate(45deg); }
+.nav-toggle.is-open span:nth-child(2) { opacity: 0; }
+.nav-toggle.is-open span:nth-child(3) { transform: translateY(-6.5px) rotate(-45deg); }
+
 @media (max-width: 640px) {
   .nav {
     padding: 20px;
     min-height: 64px;
   }
 
+  .nav-toggle {
+    display: flex;
+  }
+
   .nav-links {
-    display: none;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 20px;
+    position: fixed;
+    top: 64px;
+    left: 0;
+    right: 0;
+    padding: 32px 24px;
+    background: #FFFFFF;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.121569);
+    transform: translateY(-12px);
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.25s var(--ease), transform 0.25s var(--ease);
+    z-index: 19;
+  }
+  .nav-links.is-open {
+    opacity: 1;
+    transform: translateY(0);
+    pointer-events: auto;
   }
 }
 
@@ -364,9 +411,9 @@ section {
    =========================================================== */
 .project-thumb-stack {
   position: relative;
-  max-width: 340px;
+  max-width: 240px;
   margin: 0 auto;
-  padding-top: 26px;
+  padding-top: 22px;
 }
 
 .project-thumb-tab {
@@ -601,16 +648,13 @@ section {
 .project-grid {
   padding: 0 clamp(20px, 5vw, 64px);
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
-  gap: 48px 32px;
-}
-
-@media (max-width: 800px) {
-  .project-grid { grid-template-columns: repeat(2, 1fr); }
+  grid-template-columns: repeat(auto-fit, minmax(180px, 240px));
+  justify-content: center;
+  gap: 40px 32px;
 }
 
 @media (max-width: 520px) {
-  .project-grid { grid-template-columns: 1fr; }
+  .project-grid { grid-template-columns: minmax(140px, 200px); }
 }
 
 .project-card {
@@ -1107,88 +1151,94 @@ section {
   overflow: hidden;
 }
 
-.contact-inner {
-  max-width: 920px;
+.contact-grid {
   width: 100%;
-  display: flex;
-  flex-direction: column;
+  display: grid;
+  grid-template-columns: 1.5fr 1fr;
   gap: 40px;
+  align-items: start;
   position: relative;
   z-index: 2;
 }
 
-.contact-inner > p {
-  font-size: 18px;
-  line-height: 1.7;
-  color: rgba(0, 0, 0, 0.68);
-  max-width: 720px;
+.contact-left {
+  position: relative;
 }
 
-.contact-links {
-  width: 100%;
-  display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap: 18px;
-}
-
-.contact-link {
-  border: 1px solid rgba(0, 0, 0, 0.16);
-  background: rgba(0, 0, 0, 0.01);
-  min-height: 132px;
-  padding: 18px;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  gap: 14px;
-  font-size: 16px;
-  line-height: 1.5;
+.contact-headline {
+  font-family: 'Syne', sans-serif;
+  font-weight: 800;
+  font-size: clamp(40px, 6.6vw, 88px);
+  line-height: 0.98;
+  letter-spacing: -0.02em;
   color: #000000;
-  transition: border-color 0.25s var(--ease), transform 0.25s var(--ease), background 0.25s var(--ease);
+}
+.contact-headline em {
+  font-style: italic;
+  color: rgba(0, 0, 0, 0.45);
 }
 
-.contact-link:hover {
-  border-color: rgba(0, 0, 0, 0.35);
-  transform: translateY(-2px);
-  background: rgba(0, 0, 0, 0.04);
+.contact-tagline {
+  margin-top: 28px;
+  font-family: var(--font-body);
+  font-style: italic;
+  font-size: 18px;
+  color: rgba(0, 0, 0, 0.55);
 }
 
-.contact-link-label {
-  font-family: 'Geist Mono', monospace;
-  font-size: 11px;
-  text-transform: uppercase;
-  letter-spacing: 0.08em;
-  color: rgba(0, 0, 0, 0.48);
-}
-
-.contact-accent-circle {
+.contact-orbit {
+  box-sizing: border-box;
   position: absolute;
-  border: 1px solid rgba(0, 0, 0, 0.12);
-  border-radius: 50%;
-  width: 520px;
-  height: 520px;
-  right: -130px;
-  top: -170px;
+  width: 440px;
+  height: 440px;
+  right: -60px;
+  top: -60px;
+  opacity: 0.08;
+  border: 1px solid #000000;
+  border-radius: 999px;
   z-index: 0;
 }
 
-.contact-accent-circle-2 {
-  width: 340px;
-  height: 340px;
-  right: 210px;
-  top: 260px;
-  opacity: 0.35;
+.contact-right {
+  display: flex;
+  flex-direction: column;
+  gap: 36px;
+  padding-top: 8px;
 }
 
-.contact-diagonal-slash {
-  position: absolute;
-  width: 170px;
-  height: 0;
-  border: 1px solid rgba(0, 0, 0, 0.14);
-  right: 240px;
-  top: 200px;
-  transform: rotate(-40deg);
-  z-index: 1;
+.contact-email {
+  font-family: var(--font-mono);
+  font-size: clamp(16px, 1.6vw, 19px);
+  color: #000000;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.35);
+  padding-bottom: 6px;
+  width: fit-content;
+  transition: opacity 0.25s var(--ease), border-color 0.25s var(--ease);
 }
+.contact-email:hover {
+  opacity: 0.6;
+  border-color: var(--accent);
+}
+
+.contact-social-row {
+  display: grid;
+  grid-template-columns: repeat(2, auto);
+  gap: 12px 32px;
+}
+
+.contact-social-item {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-family: var(--font-mono);
+  font-size: 13px;
+  letter-spacing: 0.02em;
+  color: #000000;
+  opacity: 0.85;
+  transition: opacity 0.25s var(--ease);
+}
+.contact-social-item svg { width: 15px; height: 15px; flex-shrink: 0; }
+.contact-social-item:hover { opacity: 1; color: var(--accent); }
 
 /* ===========================================================
    PORTFOLIO BANNER
@@ -1467,6 +1517,21 @@ section {
   font-size: 12px;
   letter-spacing: 0.04em;
   color: var(--text-muted);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+}
+
+.footer-emoji {
+  display: inline-block;
+  font-size: 18px;
+  line-height: 1;
+  animation: footer-bounce 1.6s ease-in-out infinite;
+}
+@keyframes footer-bounce {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-8px); }
 }
 
 @media (max-width: 1200px) {
@@ -1558,9 +1623,7 @@ section {
 }
 
 .contact .section-label,
-.contact .section-title,
-.contact .contact-inner,
-.contact .contact-links {
+.contact .contact-grid {
   padding: 0;
   margin-left: 0;
   margin-right: 0;
@@ -1606,24 +1669,16 @@ section {
     gap: 40px;
   }
 
-  .contact-links {
+  .contact-grid {
     grid-template-columns: 1fr;
+    gap: 48px;
   }
 
-  .contact-link {
-    min-height: 108px;
-  }
-
-  .contact-accent-circle {
+  .contact-orbit {
     width: 280px;
     height: 280px;
-    right: -120px;
-    top: -70px;
-  }
-
-  .contact-accent-circle-2,
-  .contact-diagonal-slash {
-    display: none;
+    right: -80px;
+    top: -40px;
   }
 
   .testimonial-grid {
@@ -1683,13 +1738,47 @@ section {
   .poster-wheel-accent-circle-2 { width: 140px; height: 140px; left: 10px; bottom: 20px; }
 }
 
+.work-more {
+  display: flex;
+  justify-content: center;
+  padding: 24px clamp(20px, 5vw, 64px) 0;
+  margin-bottom: -72px;
+}
+
+.drive-link-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  width: fit-content;
+  flex: 0 0 auto;
+  padding: 14px 24px;
+  border: 1px solid #000000;
+  border-radius: 999px;
+  font-family: 'Geist Mono', monospace;
+  font-size: 13px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: #000000;
+  background: transparent;
+  transition: background 0.25s var(--ease), color 0.25s var(--ease), transform 0.25s var(--ease);
+}
+.drive-link-btn svg { width: 16px; height: 16px; flex-shrink: 0; }
+.drive-link-btn:hover,
+.drive-link-btn:focus-visible {
+  background: #000000;
+  color: #FFFFFF;
+  transform: translateY(-2px);
+}
+
 @media (min-width: 761px) and (max-width: 1100px) {
   .testimonial-grid {
     grid-template-columns: 1fr;
   }
 
-  .contact-links {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
+  .contact-grid {
+    grid-template-columns: 1fr;
+    gap: 48px;
   }
 
   .poster-wheel { height: 500px; }
@@ -1717,7 +1806,7 @@ section {
 
   <header class="nav">
     <a href="#" class="nav-logo">Moses Ngaru</a>
-    <nav class="nav-links">
+    <nav class="nav-links" id="navLinks">
       <a href="#work">Work</a>
       <a href="#photography">Photography</a>
       <a href="#posters">Posters</a>
@@ -1725,7 +1814,13 @@ section {
       <a href="#about">About me</a>
       <a href="#contact">Contact</a>
     </nav>
+    <button class="nav-toggle" id="navToggle" type="button" aria-label="Toggle menu" aria-expanded="false" aria-controls="navLinks">
+      <span></span>
+      <span></span>
+      <span></span>
+    </button>
   </header>
+
 
   <!-- PORTFOLIO BANNER -->
   <section class="portfolio-banner">
@@ -1769,7 +1864,7 @@ section {
         <h2 class="echo-title">Short Content.</h2>
       </div>
       <p class="feature-intro-text">
-        Editing for Reels and TikTok — cutting and arranging clips to fit short
+        Editing for Reels and TikTok, cutting and arranging clips to fit short
         durations, syncing to trending audio, and making sure every video grabs
         attention in the first second.
       </p>
@@ -1830,25 +1925,15 @@ section {
           <p class="project-tags">Documentary · 2025</p>
         </div>
       </article>
+    </div>
 
-      <article class="project-card" data-reveal>
-        <div class="project-thumb-stack">
-          <div class="project-thumb-tab project-thumb-tab-1" aria-hidden="true"></div>
-          <div class="project-thumb-tab project-thumb-tab-2" aria-hidden="true"></div>
-          <div class="project-thumb">
-            <!-- PLACEHOLDER: Project 4 poster image + video filenames -->
-            <video muted loop playsinline preload="none" poster="REPLACE-WITH-PROJECT-4-POSTER.jpg">
-              <source src="REPLACE-WITH-PROJECT-4.mp4" type="video/mp4" />
-            </video>
-            <div class="project-scrub"><div class="project-scrub-fill"></div></div>
-          </div>
-        </div>
-        <div class="project-meta">
-          <h3>Project Title Four</h3>
-          <p class="project-tags">Short Film · 2024</p>
-        </div>
-      </article>
-
+    <div class="work-more">
+      <a class="drive-link-btn" href="YOUR-GOOGLE-DRIVE-LINK-HERE" target="_blank" rel="noopener noreferrer">
+        View More Projects
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+          <path d="M7 17L17 7M17 7H9M17 7V15" stroke-linecap="round" stroke-linejoin="round" />
+        </svg>
+      </a>
     </div>
   </section>
 
@@ -1874,7 +1959,7 @@ section {
 
           <!-- PLACEHOLDER: Photo 01 filename -->
           <button class="photo-wheel-item" type="button" role="option" data-title="Photo 01" aria-label="Photo 01">
-            <img class="photo-wheel-img" src="REPLACE-WITH-PHOTO-01.jpg" alt="Photography sample 01" />
+            <img class="photo-wheel-img" src="ofwe.jpeg" alt="Photography sample 01" />
             <span class="photo-wheel-placeholder">Photo 01 Preview</span>
             <span class="photo-wheel-title">Photo 01</span>
           </button>
@@ -1946,7 +2031,7 @@ section {
   <!-- POSTERS -->
   <section class="posters" id="posters">
     <p class="section-label">03 / Posters</p>
-    <p class="section-intro">Poster gallery curated directly in code.</p>
+    <p class="section-intro">MY Poster gallery <br> Click for full view of each poster</p>
 
     <div class="poster-wheel-wrap" data-reveal>
       <div class="poster-wheel-accent-circle" aria-hidden="true"></div>
@@ -1957,84 +2042,84 @@ section {
 
           <!-- PLACEHOLDER: Poster 01 image filename -->
           <button class="poster-wheel-item" type="button" role="option" data-title="Poster 01" aria-label="Poster 01">
-            <img class="poster-wheel-img" src="REPLACE-WITH-POSTER-01.jpg" alt="Poster 01 preview" />
+            <img class="poster-wheel-img" src="real-es.jpeg" alt="Poster 01 preview" />
             <span class="poster-wheel-placeholder">Poster 01 Preview</span>
             <span class="poster-wheel-title">Poster 01</span>
           </button>
 
           <!-- PLACEHOLDER: Poster 02 image filename -->
           <button class="poster-wheel-item" type="button" role="option" data-title="Poster 02" aria-label="Poster 02">
-            <img class="poster-wheel-img" src="REPLACE-WITH-POSTER-02.jpg" alt="Poster 02 preview" />
+            <img class="poster-wheel-img" src="church2.jpeg" alt="Poster 02 preview" />
             <span class="poster-wheel-placeholder">Poster 02 Preview</span>
             <span class="poster-wheel-title">Poster 02</span>
           </button>
 
           <!-- PLACEHOLDER: Poster 03 image filename -->
           <button class="poster-wheel-item" type="button" role="option" data-title="Poster 03" aria-label="Poster 03">
-            <img class="poster-wheel-img" src="REPLACE-WITH-POSTER-03.jpg" alt="Poster 03 preview" />
+            <img class="poster-wheel-img" src="soup.jpeg" alt="Poster 03 preview" />
             <span class="poster-wheel-placeholder">Poster 03 Preview</span>
             <span class="poster-wheel-title">Poster 03</span>
           </button>
 
           <!-- PLACEHOLDER: Poster 04 image filename -->
           <button class="poster-wheel-item" type="button" role="option" data-title="Poster 04" aria-label="Poster 04">
-            <img class="poster-wheel-img" src="REPLACE-WITH-POSTER-04.jpg" alt="Poster 04 preview" />
+            <img class="poster-wheel-img" src="real-estate.jpeg" alt="Poster 04 preview" />
             <span class="poster-wheel-placeholder">Poster 04 Preview</span>
             <span class="poster-wheel-title">Poster 04</span>
           </button>
 
           <!-- PLACEHOLDER: Poster 05 image filename -->
           <button class="poster-wheel-item" type="button" role="option" data-title="Poster 05" aria-label="Poster 05">
-            <img class="poster-wheel-img" src="REPLACE-WITH-POSTER-05.jpg" alt="Poster 05 preview" />
+            <img class="poster-wheel-img" src="ann.jpeg" alt="Poster 05 preview" />
             <span class="poster-wheel-placeholder">Poster 05 Preview</span>
             <span class="poster-wheel-title">Poster 05</span>
           </button>
 
           <!-- PLACEHOLDER: Poster 06 image filename -->
           <button class="poster-wheel-item" type="button" role="option" data-title="Poster 06" aria-label="Poster 06">
-            <img class="poster-wheel-img" src="REPLACE-WITH-POSTER-06.jpg" alt="Poster 06 preview" />
+            <img class="poster-wheel-img" src="rea.jpeg" alt="Poster 06 preview" />
             <span class="poster-wheel-placeholder">Poster 06 Preview</span>
             <span class="poster-wheel-title">Poster 06</span>
           </button>
 
           <!-- PLACEHOLDER: Poster 07 image filename -->
           <button class="poster-wheel-item" type="button" role="option" data-title="Poster 07" aria-label="Poster 07">
-            <img class="poster-wheel-img" src="REPLACE-WITH-POSTER-07.jpg" alt="Poster 07 preview" />
+            <img class="poster-wheel-img" src="church4.jpeg" alt="Poster 07 preview" />
             <span class="poster-wheel-placeholder">Poster 07 Preview</span>
             <span class="poster-wheel-title">Poster 07</span>
           </button>
 
           <!-- PLACEHOLDER: Poster 08 image filename -->
           <button class="poster-wheel-item" type="button" role="option" data-title="Poster 08" aria-label="Poster 08">
-            <img class="poster-wheel-img" src="REPLACE-WITH-POSTER-08.jpg" alt="Poster 08 preview" />
+            <img class="poster-wheel-img" src="Honey.jpeg" alt="Poster 08 preview" />
             <span class="poster-wheel-placeholder">Poster 08 Preview</span>
             <span class="poster-wheel-title">Poster 08</span>
           </button>
 
           <!-- PLACEHOLDER: Poster 09 image filename -->
           <button class="poster-wheel-item" type="button" role="option" data-title="Poster 09" aria-label="Poster 09">
-            <img class="poster-wheel-img" src="REPLACE-WITH-POSTER-09.jpg" alt="Poster 09 preview" />
+            <img class="poster-wheel-img" src="church5.jpeg" alt="Poster 09 preview" />
             <span class="poster-wheel-placeholder">Poster 09 Preview</span>
             <span class="poster-wheel-title">Poster 09</span>
           </button>
 
           <!-- PLACEHOLDER: Poster 10 image filename -->
           <button class="poster-wheel-item" type="button" role="option" data-title="Poster 10" aria-label="Poster 10">
-            <img class="poster-wheel-img" src="REPLACE-WITH-POSTER-10.jpg" alt="Poster 10 preview" />
+            <img class="poster-wheel-img" src="church7.jpeg" alt="Poster 10 preview" />
             <span class="poster-wheel-placeholder">Poster 10 Preview</span>
             <span class="poster-wheel-title">Poster 10</span>
           </button>
 
           <!-- PLACEHOLDER: Poster 11 image filename -->
           <button class="poster-wheel-item" type="button" role="option" data-title="Poster 11" aria-label="Poster 11">
-            <img class="poster-wheel-img" src="REPLACE-WITH-POSTER-11.jpg" alt="Poster 11 preview" />
+            <img class="poster-wheel-img" src="rally.jpeg" alt="Poster 11 preview" />
             <span class="poster-wheel-placeholder">Poster 11 Preview</span>
             <span class="poster-wheel-title">Poster 11</span>
           </button>
 
           <!-- PLACEHOLDER: Poster 12 image filename -->
           <button class="poster-wheel-item" type="button" role="option" data-title="Poster 12" aria-label="Poster 12">
-            <img class="poster-wheel-img" src="REPLACE-WITH-POSTER-12.jpg" alt="Poster 12 preview" />
+            <img class="poster-wheel-img" src="church6.jpeg" alt="Poster 12 preview" />
             <span class="poster-wheel-placeholder">Poster 12 Preview</span>
             <span class="poster-wheel-title">Poster 12</span>
           </button>
@@ -2134,40 +2219,67 @@ section {
 
   <!-- CONTACT -->
   <section class="contact" id="contact">
-    <div class="contact-accent-circle" aria-hidden="true"></div>
-    <div class="contact-accent-circle contact-accent-circle-2" aria-hidden="true"></div>
-    <div class="contact-diagonal-slash" aria-hidden="true"></div>
+    <div class="contact-orbit" aria-hidden="true"></div>
 
     <p class="section-label">Get in Touch</p>
-    <h2 class="section-title">Let's talk.</h2>
 
-    <div class="contact-inner">
-      <p>Whether it's a project, a collaboration, or just a conversation - reach out.</p>
+    <div class="contact-grid">
+      <div class="contact-left">
+        <h2 class="contact-headline">Want to<br>start a <em>new</em><br>project?</h2>
+        <p class="contact-tagline">Or just say hello.</p>
+      </div>
 
-      <div class="contact-links">
-        <a class="contact-link" href="mailto:magdalene.w.wanjiku@gmail.com">
-          <span class="contact-link-label">Email</span>
-          magdalene.w.wanjiku@gmail.com
-        </a>
+      <div class="contact-right">
+        <a class="contact-email" href="mailto:ngarugem@gmail.com">ngarugem@gmail.com</a>
 
-        <a class="contact-link" href="tel:+254715778399">
-          <span class="contact-link-label">Phone</span>
-          0715 778 399
-        </a>
-
-        <a class="contact-link" href="https://www.linkedin.com/in/wangari-magdaline/" target="_blank" rel="noopener">
-          <span class="contact-link-label">LinkedIn</span>
-          linkedin.com/in/wangari-magdaline
-        </a>
+        <div class="contact-social-row">
+          <a class="contact-social-item" href="tel:+254715778399">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.127.96.362 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.338 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+            Phone
+          </a>
+          <a class="contact-social-item" href="https://www.linkedin.com/in/wangari-magdaline/" target="_blank" rel="noopener">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></svg>
+            LinkedIn
+          </a>
+          <a class="contact-social-item" href="#" target="_blank" rel="noopener">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none"/></svg>
+            Instagram
+          </a>
+          <a class="contact-social-item" href="https://www.tiktok.com/@ngarugem" target="_blank" rel="noopener">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M9 12a4 4 0 1 0 4 4V4a5 5 0 0 0 5 5"/></svg>
+            TikTok
+          </a>
+        </div>
       </div>
     </div>
   </section>
 
   <footer class="site-footer">
-    <p>&copy; <span id="year"></span> Moses Ngaru. All rights reserved.</p>
+    <p>&copy; <span id="year"></span> All rights reserved.</p>
+    <span class="footer-emoji" aria-hidden="true">🗿</span>
   </footer>
 
   <script>
+// ===========================================================
+// Mobile nav toggle
+// ===========================================================
+const navToggle = document.getElementById('navToggle');
+const navLinks = document.getElementById('navLinks');
+if (navToggle && navLinks) {
+  navToggle.addEventListener('click', () => {
+    const isOpen = navLinks.classList.toggle('is-open');
+    navToggle.classList.toggle('is-open', isOpen);
+    navToggle.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
+  });
+  navLinks.querySelectorAll('a').forEach((link) => {
+    link.addEventListener('click', () => {
+      navLinks.classList.remove('is-open');
+      navToggle.classList.remove('is-open');
+      navToggle.setAttribute('aria-expanded', 'false');
+    });
+  });
+}
+
 // ===========================================================
 // Scrub bar: fills based on scroll progress
 // ===========================================================
@@ -2247,9 +2359,7 @@ document.querySelectorAll('.project-card').forEach((card) => {
   });
 });
 
-// ===========================================================
-// Footer year
-// ===========================================================
+
 const yearEl = document.getElementById('year');
 if (yearEl) yearEl.textContent = new Date().getFullYear();
 
