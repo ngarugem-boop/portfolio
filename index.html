@@ -329,11 +329,10 @@ img, video { display: block; max-width: 100%; }
   letter-spacing: 0.1em;
   color: var(--text-muted);
   padding: 0 clamp(20px, 5vw, 64px);
-  margin-bottom: 32px;
 }
 
 section {
-  padding: 120px 0 80px;
+  padding: 60px 0 53px;
   border-top: 1px solid var(--line);
   overflow-x: hidden;
 }
@@ -394,7 +393,6 @@ section {
    =========================================================== */
 .feature-intro {
   padding: 0 clamp(20px, 5vw, 64px);
-  margin-bottom: 48px;
   max-width: 640px;
 }
 
@@ -459,7 +457,7 @@ section {
 .photography {
   width: min(100%, 1440px);
   margin: 0 auto;
-  padding: 100px 80px 120px;
+  padding: 50px 80px 80px;
   border-top: 1px solid rgba(0, 0, 0, 0.121569);
 }
 
@@ -468,13 +466,13 @@ section {
   display: grid;
   grid-template-columns: minmax(240px, 380px) 1fr;
   align-items: center;
-  gap: 64px;
+  gap: 32px;
 }
 
 @media (max-width: 900px) {
   .photography-layout {
     grid-template-columns: 1fr;
-    gap: 40px;
+    gap: 20px;
     text-align: center;
   }
   .photography-intro {
@@ -651,6 +649,19 @@ section {
   transform: translateX(-50%) scale(1.06);
 }
 
+.project-grid-wrap {
+  position: relative;
+  width: 100%;
+}
+
+.work-more {
+  display: flex;
+  justify-content: center;
+  width: 100%;
+  margin: -56px 0 -80px;
+  padding: 40px clamp(20px, 5vw, 64px);
+}
+
 .project-grid {
   padding: 0 clamp(20px, 5vw, 64px);
   display: grid;
@@ -659,8 +670,57 @@ section {
   gap: 40px 32px;
 }
 
-@media (max-width: 520px) {
-  .project-grid { grid-template-columns: minmax(140px, 200px); }
+.project-grid-arrow {
+  display: none;
+}
+
+@media (max-width: 760px) {
+  .project-grid {
+    display: flex;
+    grid-template-columns: none;
+    justify-content: flex-start;
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    -webkit-overflow-scrolling: touch;
+    gap: 16px;
+    padding: 0 20px;
+    scrollbar-width: none;
+  }
+  .project-grid::-webkit-scrollbar { display: none; }
+
+  .project-card {
+    flex: 0 0 auto;
+    width: 58vw;
+    max-width: 220px;
+    scroll-snap-align: start;
+  }
+
+  .project-grid-arrow {
+    display: flex;
+    position: absolute;
+    right: 4px;
+    top: 38%;
+    transform: translateY(-50%);
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+    border: 1px solid rgba(0, 0, 0, 0.2);
+    background: #FFFFFF;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    z-index: 5;
+    color: #000000;
+    transition: border-color 0.25s var(--ease), background 0.25s var(--ease), color 0.25s var(--ease), transform 0.25s var(--ease);
+  }
+  .project-grid-arrow svg { width: 16px; height: 16px; }
+  .project-grid-arrow:hover,
+  .project-grid-arrow:focus-visible {
+    border-color: var(--accent);
+    background: var(--accent);
+    color: #FFFFFF;
+    transform: translateY(-50%) scale(1.06);
+  }
 }
 
 .project-card {
@@ -734,8 +794,8 @@ section {
   display: flex;
   flex-direction: column;
   align-items: flex-start;
-  padding: 100px 80px 120px;
-  gap: 56px;
+  padding: 50px 80px 80px;
+  gap: 28px;
   border-top: 1px solid rgba(0, 0, 0, 0.121569);
 }
 
@@ -1006,7 +1066,7 @@ section {
   display: flex;
   flex-direction: column;
   align-items: flex-start;
-  padding: 100px 80px 120px;
+  padding: 50px 80px 80px;
   gap: 56px;
   border-top: 1px solid rgba(0, 0, 0, 0.121569);
 }
@@ -1282,19 +1342,6 @@ section {
   z-index: 0;
 }
 
-.geometric-diagonal-slash {
-  box-sizing: border-box;
-  position: absolute;
-  width: 120px;
-  height: 0;
-  right: 200px;
-  top: 275.15px;
-  opacity: 0.15;
-  border: 1px solid #000000;
-  transform: rotate(-45deg);
-  z-index: 1;
-}
-
 .top-metadata-strip {
   display: flex;
   flex-direction: row;
@@ -1485,7 +1532,7 @@ section {
   }
 
   .masthead-name {
-    font-size: clamp(44px, 15vw, 68px);
+    font-size: clamp(40px, 12vw, 60px);
   }
 
   .bottom-strip {
@@ -1505,10 +1552,6 @@ section {
     top: -40px;
   }
 
-  .geometric-diagonal-slash {
-    right: 24px;
-    top: 240px;
-  }
 }
 
 /* ===========================================================
@@ -1565,7 +1608,7 @@ section {
   display: flex;
   flex-direction: column;
   align-items: flex-start;
-  padding: 100px 80px 120px;
+  padding: 50px 80px 80px;
   gap: 56px;
   min-height: auto;
   border-top: none;
@@ -1590,7 +1633,7 @@ section {
   display: flex;
   flex-direction: column;
   align-items: flex-start;
-  padding: 100px 80px 120px;
+  padding: 50px 80px 80px;
   gap: 56px;
   min-height: 808px;
   border-top: 1px solid rgba(0, 0, 0, 0.121569);
@@ -1605,7 +1648,7 @@ section {
   display: flex;
   flex-direction: column;
   align-items: flex-start;
-  padding: 100px 80px 120px;
+  padding: 50px 80px 80px;
   gap: 56px;
   min-height: 702px;
   border-top: 1px solid rgba(0, 0, 0, 0.121569);
@@ -1620,7 +1663,7 @@ section {
   display: flex;
   flex-direction: column;
   align-items: flex-start;
-  padding: 120px 80px 64px;
+  padding: 60px 80px 43px;
   gap: 80px;
   min-height: 661px;
   background: #FFFFFF;
@@ -1641,12 +1684,16 @@ section {
   .posters,
   .testimonials,
   .about {
-    padding: 80px 48px 96px;
+    padding: 40px 48px 64px;
   }
 
   .contact {
-    padding: 96px 48px 56px;
+    padding: 48px 48px 37px;
     gap: 64px;
+  }
+
+  .work-more {
+    margin-bottom: -64px;
   }
 
   .work,
@@ -1666,13 +1713,30 @@ section {
   .posters,
   .testimonials,
   .about {
-    padding: 64px 20px 80px;
-    gap: 40px;
+    padding: 24px 20px 37px;
+    gap: 32px;
   }
 
   .contact {
-    padding: 72px 20px 48px;
-    gap: 40px;
+    padding: 28px 20px 27px;
+    gap: 32px;
+  }
+
+  .contact-headline {
+    font-size: clamp(30px, 9vw, 44px);
+  }
+
+  .work-more {
+    margin: -32px 0 -37px;
+    padding: 24px 20px;
+  }
+
+  .posters {
+    gap: 16px;
+  }
+
+  .contact-tagline {
+    font-size: 15px;
   }
 
   .contact-grid {
@@ -1712,9 +1776,9 @@ section {
     transform: translateX(0) translateY(-20px) rotate(0deg) scale(1.06);
   }
 
-  .echo-title { font-size: clamp(32px, 11vw, 56px); }
+  .echo-title { font-size: clamp(28px, 9vw, 48px); }
   .motion-title-wrap { padding-bottom: 16px; }
-  .photography { padding: 64px 20px 80px; }
+  .photography { padding: 24px 20px 37px; }
 
   .photo-wheel { height: 440px; }
   .photo-wheel-item {
@@ -1742,13 +1806,6 @@ section {
 
   .poster-wheel-accent-circle { width: 220px; height: 220px; right: -90px; top: -60px; }
   .poster-wheel-accent-circle-2 { width: 140px; height: 140px; left: 10px; bottom: 20px; }
-}
-
-.work-more {
-  display: flex;
-  justify-content: center;
-  padding: 24px clamp(20px, 5vw, 64px) 0;
-  margin-bottom: -72px;
 }
 
 .drive-link-btn {
@@ -1831,7 +1888,6 @@ section {
   <!-- PORTFOLIO BANNER -->
   <section class="portfolio-banner">
     <div class="geometric-accent-circle" aria-hidden="true"></div>
-    <div class="geometric-diagonal-slash" aria-hidden="true"></div>
 
     <div class="top-metadata-strip">
       <div class="left-brand-block">
@@ -1876,7 +1932,8 @@ section {
       </p>
     </div>
 
-    <div class="project-grid">
+    <div class="project-grid-wrap">
+      <div class="project-grid" id="projectGrid">
 
       <article class="project-card" data-reveal>
         <div class="project-thumb-stack">
@@ -1931,6 +1988,11 @@ section {
           <p class="project-tags">Documentary · 2025</p>
         </div>
       </article>
+    </div>
+
+      <button class="project-grid-arrow" id="projectGridNext" type="button" aria-label="View next project">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M9 6l6 6-6 6" stroke-linecap="round" stroke-linejoin="round" /></svg>
+      </button>
     </div>
 
     <div class="work-more">
@@ -2236,7 +2298,7 @@ section {
       </div>
 
       <div class="contact-right">
-        <a class="contact-email" href="ngarugem@gmail.com">ngarugem@gmail.com</a>
+        <a class="contact-email" href="mailto:ngarugem@gmail.com">ngarugem@gmail.com</a>
 
         <div class="contact-social-row">
           <a class="contact-social-item" href="tel:+254715778399">
@@ -2323,6 +2385,25 @@ function tickTimecode() {
 setInterval(tickTimecode, 1000 / FPS);
 
 // ===========================================================
+// Project grid — arrow scroll (mobile horizontal carousel)
+// ===========================================================
+const projectGrid = document.getElementById('projectGrid');
+const projectGridNext = document.getElementById('projectGridNext');
+if (projectGrid && projectGridNext) {
+  projectGridNext.addEventListener('click', () => {
+    const card = projectGrid.querySelector('.project-card');
+    const cardWidth = card ? card.getBoundingClientRect().width : 220;
+    const gap = 16;
+    const maxScroll = projectGrid.scrollWidth - projectGrid.clientWidth;
+    if (projectGrid.scrollLeft >= maxScroll - 4) {
+      projectGrid.scrollTo({ left: 0, behavior: 'smooth' });
+    } else {
+      projectGrid.scrollBy({ left: cardWidth + gap, behavior: 'smooth' });
+    }
+  });
+}
+
+// ===========================================================
 // Scroll reveal for cards / about block
 // ===========================================================
 const revealTargets = document.querySelectorAll('[data-reveal], .project-card, .about-photo, .about-text');
@@ -2334,7 +2415,7 @@ const revealObserver = new IntersectionObserver((entries) => {
       revealObserver.unobserve(entry.target);
     }
   });
-}, { threshold: 0.15 });
+}, { threshold: 0.1, rootMargin: '0px 0px -5% 0px' });
 
 revealTargets.forEach((el) => revealObserver.observe(el));
 
