@@ -411,39 +411,12 @@ section {
 }
 
 /* ===========================================================
-   PROJECT THUMB STACK (peeking tabs behind the video card)
+   PROJECT THUMB STACK
    =========================================================== */
 .project-thumb-stack {
   position: relative;
   max-width: 240px;
   margin: 0 auto;
-  padding-top: 22px;
-}
-
-.project-thumb-tab {
-  position: absolute;
-  left: 50%;
-  transform: translateX(-50%);
-  border-radius: 4px 4px 0 0;
-  z-index: 0;
-}
-
-.project-thumb-tab-1 {
-  top: 0;
-  width: 84%;
-  height: 36px;
-  background: rgba(0, 0, 0, 0.04);
-  border: 1px solid var(--line);
-  border-bottom: none;
-}
-
-.project-thumb-tab-2 {
-  top: 13px;
-  width: 92%;
-  height: 26px;
-  background: rgba(179, 64, 46, 0.1);
-  border: 1px solid rgba(179, 64, 46, 0.25);
-  border-bottom: none;
 }
 
 .project-thumb-stack .project-thumb {
@@ -759,6 +732,34 @@ section {
   transform: scale(1.03);
 }
 
+.project-thumb-play {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 56px;
+  height: 56px;
+  border-radius: 50%;
+  border: 1px solid rgba(255, 255, 255, 0.7);
+  background: rgba(0, 0, 0, 0.35);
+  color: #FFFFFF;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  z-index: 2;
+  backdrop-filter: blur(2px);
+  transition: background 0.25s var(--ease), border-color 0.25s var(--ease), transform 0.25s var(--ease);
+}
+.project-thumb-play svg { width: 20px; height: 20px; margin-left: 2px; }
+.project-card:hover .project-thumb-play,
+.project-thumb-play:hover,
+.project-thumb-play:focus-visible {
+  background: var(--accent);
+  border-color: var(--accent);
+  transform: translate(-50%, -50%) scale(1.08);
+}
+
 .project-scrub {
   position: absolute;
   bottom: 0;
@@ -1023,6 +1024,16 @@ section {
   object-fit: contain;
   border: 1px solid rgba(255, 255, 255, 0.15);
   background: rgba(255, 255, 255, 0.03);
+}
+
+.poster-lightbox-video {
+  max-width: 84vw;
+  max-height: 78vh;
+  width: auto;
+  height: auto;
+  object-fit: contain;
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  background: #000;
 }
 
 .poster-lightbox-caption {
@@ -1949,57 +1960,58 @@ section {
     <div class="project-grid-wrap">
       <div class="project-grid" id="projectGrid">
 
-      <article class="project-card" data-reveal>
+      <article class="project-card" data-reveal data-title="Project Title One">
         <div class="project-thumb-stack">
-          <div class="project-thumb-tab project-thumb-tab-1" aria-hidden="true"></div>
-          <div class="project-thumb-tab project-thumb-tab-2" aria-hidden="true"></div>
           <div class="project-thumb">
             <!-- PLACEHOLDER: Project 1 poster image + video filenames -->
-            <video muted loop playsinline preload="none" poster="REPLACE-WITH-PROJECT-1-POSTER.jpg">
-              <source src="REPLACE-WITH-PROJECT-1.mp4" type="video/mp4" />
+            <video muted loop playsinline preload="none" poster="ngaru.mp4" data-preview-duration="4">
+              <source src="ngaru.mp4" type="video/mp4" />
             </video>
             <div class="project-scrub"><div class="project-scrub-fill"></div></div>
+            <button class="project-thumb-play" type="button" aria-label="Play full video">
+              <svg viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z" /></svg>
+            </button>
           </div>
         </div>
         <div class="project-meta">
-          <h3>Project Title One</h3>
-          <p class="project-tags">Music Video · 2026</p>
+          <p class="project-tags">Real estate</p>
         </div>
       </article>
 
-      <article class="project-card" data-reveal>
+      <article class="project-card" data-reveal data-title="Project Title Two">
         <div class="project-thumb-stack">
-          <div class="project-thumb-tab project-thumb-tab-1" aria-hidden="true"></div>
-          <div class="project-thumb-tab project-thumb-tab-2" aria-hidden="true"></div>
           <div class="project-thumb">
             <!-- PLACEHOLDER: Project 2 poster image + video filenames -->
-            <video muted loop playsinline preload="none" poster="REPLACE-WITH-PROJECT-2-POSTER.jpg">
-              <source src="REPLACE-WITH-PROJECT-2.mp4" type="video/mp4" />
+            <video muted loop playsinline preload="none" poster="ngaru2.mp4" data-preview-duration="4">
+              <source src="ngaru2.mp4" type="video/mp4" />
             </video>
             <div class="project-scrub"><div class="project-scrub-fill"></div></div>
+            <button class="project-thumb-play" type="button" aria-label="Play full video">
+              <svg viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z" /></svg>
+            </button>
           </div>
         </div>
         <div class="project-meta">
-          <h3>Project Title Two</h3>
-          <p class="project-tags">Brand Film · 2025</p>
+          <p class="project-tags">Automobile</p>
         </div>
       </article>
 
-      <article class="project-card" data-reveal>
+      <article class="project-card" data-reveal data-title="Project Title Three">
         <div class="project-thumb-stack">
-          <div class="project-thumb-tab project-thumb-tab-1" aria-hidden="true"></div>
-          <div class="project-thumb-tab project-thumb-tab-2" aria-hidden="true"></div>
           <div class="project-thumb">
             <!-- PLACEHOLDER: Project 3 poster image + video filenames -->
-            <video muted loop playsinline preload="none" poster="REPLACE-WITH-PROJECT-3-POSTER.jpg">
-              <source src="REPLACE-WITH-PROJECT-3.mp4" type="video/mp4" />
+            <video muted loop playsinline preload="none" poster="ngaru3.mp4" data-preview-duration="4">
+              <source src="ngaru3.mp4" type="video/mp4" />
             </video>
             <div class="project-scrub"><div class="project-scrub-fill"></div></div>
+            <button class="project-thumb-play" type="button" aria-label="Play full video">
+              <svg viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z" /></svg>
+            </button>
           </div>
         </div>
         <div class="project-meta">
-          <h3>Project Title Three</h3>
-          <p class="project-tags">Documentary · 2025</p>
+      
+          <p class="project-tags">Church</p>
         </div>
       </article>
     </div>
@@ -2018,6 +2030,19 @@ section {
       </a>
     </div>
   </section>
+
+  </section>
+
+  <!-- PROJECT FULL VIDEO LIGHTBOX -->
+  <div class="poster-lightbox" id="videoLightbox" aria-hidden="true">
+    <button class="poster-lightbox-close" id="videoLightboxClose" type="button" aria-label="Close video">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M6 6l12 12M18 6L6 18" stroke-linecap="round" /></svg>
+    </button>
+    <figure class="poster-lightbox-figure">
+      <video class="poster-lightbox-video" id="videoLightboxPlayer" controls playsinline></video>
+      <figcaption class="poster-lightbox-caption" id="videoLightboxCaption"></figcaption>
+    </figure>
+  </div>
 
   <!-- PHOTOGRAPHY -->
   <section class="photography" id="photography">
@@ -2293,7 +2318,7 @@ section {
         <ul class="about-facts">
           <li><span>Based in</span> Nairobi, Kenya</li>
           <li><span>Tools</span> Capcut</li>
-          <li><span>Available for</span> Collaborations</li>
+          <li><span>Available for</span> Freelance &amp; collaborations</li>
         </ul>
       </div>
     </div>
@@ -2434,30 +2459,113 @@ const revealObserver = new IntersectionObserver((entries) => {
 revealTargets.forEach((el) => revealObserver.observe(el));
 
 // ===========================================================
-// Project thumbnails: play + scrub on hover, reset on leave
+// Project thumbnails: short muted preview only (hover on desktop,
+// in-view on touch devices) — the full video with sound only
+// loads and plays once the person clicks through to the lightbox.
 // ===========================================================
-document.querySelectorAll('.project-card').forEach((card) => {
-  const video = card.querySelector('video');
-  const scrubFillEl = card.querySelector('.project-scrub-fill');
+const videoLightbox = document.getElementById('videoLightbox');
+const videoLightboxPlayer = document.getElementById('videoLightboxPlayer');
+const videoLightboxCaption = document.getElementById('videoLightboxCaption');
+const videoLightboxClose = document.getElementById('videoLightboxClose');
 
+function openVideoLightbox(card) {
+  const sourceEl = card.querySelector('.project-thumb video source');
+  const posterEl = card.querySelector('.project-thumb video');
+  if (!sourceEl || !videoLightbox || !videoLightboxPlayer) return;
+
+  // Pause the preview so both videos aren't buffering/playing at once.
+  const previewVideo = card.querySelector('.project-thumb video');
+  if (previewVideo) previewVideo.pause();
+
+  videoLightboxPlayer.src = sourceEl.getAttribute('src') || '';
+  if (posterEl && posterEl.getAttribute('poster')) {
+    videoLightboxPlayer.setAttribute('poster', posterEl.getAttribute('poster'));
+  }
+  videoLightboxPlayer.muted = false;
+  videoLightboxCaption.textContent = card.getAttribute('data-title') || '';
+
+  videoLightbox.classList.add('is-open');
+  videoLightbox.setAttribute('aria-hidden', 'false');
+  videoLightboxPlayer.currentTime = 0;
+  videoLightboxPlayer.play().catch(() => {});
+}
+
+function closeVideoLightbox() {
+  if (!videoLightbox || !videoLightboxPlayer) return;
+  videoLightboxPlayer.pause();
+  videoLightboxPlayer.removeAttribute('src');
+  videoLightboxPlayer.load();
+  videoLightbox.classList.remove('is-open');
+  videoLightbox.setAttribute('aria-hidden', 'true');
+}
+
+if (videoLightboxClose) videoLightboxClose.addEventListener('click', closeVideoLightbox);
+if (videoLightbox) {
+  videoLightbox.addEventListener('click', (e) => {
+    if (e.target === videoLightbox) closeVideoLightbox();
+  });
+}
+document.addEventListener('keydown', (e) => {
+  if (e.key === 'Escape' && videoLightbox && videoLightbox.classList.contains('is-open')) {
+    closeVideoLightbox();
+  }
+});
+
+const canHover = window.matchMedia('(hover: hover)').matches;
+
+document.querySelectorAll('.project-card').forEach((card) => {
+  const video = card.querySelector('.project-thumb video');
+  const scrubFillEl = card.querySelector('.project-scrub-fill');
+  const playBtn = card.querySelector('.project-thumb-play');
   if (!video) return;
 
-  card.addEventListener('mouseenter', () => {
-    video.currentTime = 0;
-    video.play().catch(() => {});
-  });
+  const previewDuration = parseFloat(video.dataset.previewDuration || '4');
 
-  card.addEventListener('mouseleave', () => {
+  const playPreview = () => {
+    video.play().catch(() => {});
+  };
+  const stopPreview = () => {
     video.pause();
     video.currentTime = 0;
     if (scrubFillEl) scrubFillEl.style.width = '0%';
+  };
+
+  // Loop only the short preview window instead of the full video,
+  // so nothing beyond the first few seconds ever needs to buffer.
+  video.addEventListener('timeupdate', () => {
+    if (video.currentTime >= previewDuration) {
+      video.currentTime = 0;
+    }
+    if (scrubFillEl && previewDuration) {
+      const pct = Math.min(video.currentTime / previewDuration, 1) * 100;
+      scrubFillEl.style.width = pct + '%';
+    }
   });
 
-  video.addEventListener('timeupdate', () => {
-    if (!video.duration || !scrubFillEl) return;
-    const pct = (video.currentTime / video.duration) * 100;
-    scrubFillEl.style.width = pct + '%';
-  });
+  if (canHover) {
+    card.addEventListener('mouseenter', playPreview);
+    card.addEventListener('mouseleave', stopPreview);
+  } else {
+    // Touch devices: play the short preview while the card is in view.
+    const previewObserver = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          playPreview();
+        } else {
+          stopPreview();
+        }
+      });
+    }, { threshold: 0.6 });
+    previewObserver.observe(card);
+  }
+
+  const openFull = (e) => {
+    e.preventDefault();
+    e.stopPropagation();
+    openVideoLightbox(card);
+  };
+  if (playBtn) playBtn.addEventListener('click', openFull);
+  card.addEventListener('click', openFull);
 });
 
 
