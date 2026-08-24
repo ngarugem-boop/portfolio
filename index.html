@@ -1964,7 +1964,7 @@ section {
         <div class="project-thumb-stack">
           <div class="project-thumb">
             <!-- PLACEHOLDER: Project 1 poster image + video filenames -->
-            <video muted loop playsinline preload="none" poster="ngaru.mp4" data-preview-duration="4">
+            <video muted loop playsinline preload="metadata" data-preview-duration="4">
               <source src="ngaru.mp4" type="video/mp4" />
             </video>
             <div class="project-scrub"><div class="project-scrub-fill"></div></div>
@@ -1982,7 +1982,7 @@ section {
         <div class="project-thumb-stack">
           <div class="project-thumb">
             <!-- PLACEHOLDER: Project 2 poster image + video filenames -->
-            <video muted loop playsinline preload="none" poster="ngaru2.mp4" data-preview-duration="4">
+            <video muted loop playsinline preload="metadata" data-preview-duration="4">
               <source src="ngaru2.mp4" type="video/mp4" />
             </video>
             <div class="project-scrub"><div class="project-scrub-fill"></div></div>
@@ -2000,7 +2000,7 @@ section {
         <div class="project-thumb-stack">
           <div class="project-thumb">
             <!-- PLACEHOLDER: Project 3 poster image + video filenames -->
-            <video muted loop playsinline preload="none" poster="ngaru3.mp4" data-preview-duration="4">
+            <video muted loop playsinline preload="metadata" data-preview-duration="4">
               <source src="ngaru3.mp4" type="video/mp4" />
             </video>
             <div class="project-scrub"><div class="project-scrub-fill"></div></div>
@@ -2511,8 +2511,6 @@ document.addEventListener('keydown', (e) => {
   }
 });
 
-const canHover = window.matchMedia('(hover: hover)').matches;
-
 document.querySelectorAll('.project-card').forEach((card) => {
   const video = card.querySelector('.project-thumb video');
   const scrubFillEl = card.querySelector('.project-scrub-fill');
@@ -2542,22 +2540,24 @@ document.querySelectorAll('.project-card').forEach((card) => {
     }
   });
 
-  if (canHover) {
-    card.addEventListener('mouseenter', playPreview);
-    card.addEventListener('mouseleave', stopPreview);
-  } else {
-    // Touch devices: play the short preview while the card is in view.
-    const previewObserver = new IntersectionObserver((entries) => {
-      entries.forEach((entry) => {
-        if (entry.isIntersecting) {
-          playPreview();
-        } else {
-          stopPreview();
-        }
-      });
-    }, { threshold: 0.6 });
-    previewObserver.observe(card);
-  }
+  // Desktop hover convenience.
+  card.addEventListener('mouseenter', playPreview);
+  card.addEventListener('mouseleave', stopPreview);
+
+  // Universal: plays the preview whenever the card is scrolled into
+  // view. This is what actually drives mobile/touch devices (no
+  // hover event there), and doesn't rely on hover-capability
+  // detection, which can misreport in some mobile browsers.
+  const previewObserver = new IntersectionObserver((entries) => {
+    entries.forEach((entry) => {
+      if (entry.isIntersecting) {
+        playPreview();
+      } else {
+        stopPreview();
+      }
+    });
+  }, { threshold: 0.6 });
+  previewObserver.observe(card);
 
   const openFull = (e) => {
     e.preventDefault();
