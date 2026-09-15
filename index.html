@@ -1112,22 +1112,7 @@ section {
   transform: translateY(0);
 }
 
-.testimonial-head {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-}
-
-.testimonial-photo {
-  width: 56px;
-  height: 56px;
-  border-radius: 50%;
-  object-fit: cover;
-  background: #ECECEA;
-  border: 1px solid rgba(0, 0, 0, 0.121569);
-}
-
-.testimonial-person h3 {
+.testimonial-card h3 {
   font-family: 'Geist Mono', monospace;
   font-size: 12px;
   line-height: 16px;
@@ -1135,17 +1120,20 @@ section {
   letter-spacing: 0.08em;
 }
 
-.testimonial-person p {
+.testimonial-role {
+  margin-top: -10px;
   font-family: 'Geist Mono', monospace;
   font-size: 11px;
   line-height: 15px;
   color: rgba(0, 0, 0, 0.6);
 }
 
-.testimonial-comment {
-  font-size: 15px;
-  line-height: 1.6;
-  color: #111111;
+.testimonial-screenshot {
+  width: 100%;
+  height: auto;
+  object-fit: contain;
+  background: #ECECEA;
+  border: 1px solid rgba(0, 0, 0, 0.121569);
 }
 
 /* ===========================================================
@@ -1191,6 +1179,7 @@ section {
   color: var(--text-muted);
   max-width: 480px;
 }
+.about-text p + p { margin-top: 20px; }
 
 .about-facts {
   list-style: none;
@@ -1759,7 +1748,6 @@ section {
   .about-text p,
   .feature-intro-text,
   .photography-intro-text,
-  .testimonial-comment,
   .contact-tagline {
     font-size: 12px;
   }
@@ -2073,35 +2061,35 @@ section {
 
           <!-- PLACEHOLDER: Photo 02 filename -->
           <button class="photo-wheel-item" type="button" role="option" data-title="Photo 02" aria-label="Photo 02">
-            <img class="photo-wheel-img" src="REPLACE-WITH-PHOTO-02.jpg" alt="Photography sample 02" />
+            <img class="photo-wheel-img" src="reles.jpeg" alt="Photography sample 02" />
             <span class="photo-wheel-placeholder">Photo 02 Preview</span>
             <span class="photo-wheel-title">Photo 02</span>
           </button>
 
           <!-- PLACEHOLDER: Photo 03 filename -->
           <button class="photo-wheel-item" type="button" role="option" data-title="Photo 03" aria-label="Photo 03">
-            <img class="photo-wheel-img" src="REPLACE-WITH-PHOTO-03.jpg" alt="Photography sample 03" />
+            <img class="photo-wheel-img" src="shoot.jpeg" alt="Photography sample 03" />
             <span class="photo-wheel-placeholder">Photo 03 Preview</span>
             <span class="photo-wheel-title">Photo 03</span>
           </button>
 
           <!-- PLACEHOLDER: Photo 04 filename -->
           <button class="photo-wheel-item" type="button" role="option" data-title="Photo 04" aria-label="Photo 04">
-            <img class="photo-wheel-img" src="REPLACE-WITH-PHOTO-04.jpg" alt="Photography sample 04" />
+            <img class="photo-wheel-img" src="BokeCare.PNG" alt="Photography sample 04" />
             <span class="photo-wheel-placeholder">Photo 04 Preview</span>
             <span class="photo-wheel-title">Photo 04</span>
           </button>
 
           <!-- PLACEHOLDER: Photo 05 filename -->
           <button class="photo-wheel-item" type="button" role="option" data-title="Photo 05" aria-label="Photo 05">
-            <img class="photo-wheel-img" src="REPLACE-WITH-PHOTO-05.jpg" alt="Photography sample 05" />
+            <img class="photo-wheel-img" src="kk.jpeg" alt="Photography sample 05" />
             <span class="photo-wheel-placeholder">Photo 05 Preview</span>
             <span class="photo-wheel-title">Photo 05</span>
           </button>
 
           <!-- PLACEHOLDER: Photo 06 filename -->
           <button class="photo-wheel-item" type="button" role="option" data-title="Photo 06" aria-label="Photo 06">
-            <img class="photo-wheel-img" src="REPLACE-WITH-PHOTO-06.jpg" alt="Photography sample 06" />
+            <img class="photo-wheel-img" src="view.jpeg" alt="Photography sample 06" />
             <span class="photo-wheel-placeholder">Photo 06 Preview</span>
             <span class="photo-wheel-title">Photo 06</span>
           </button>
@@ -2264,39 +2252,24 @@ section {
     <p class="section-label">04 / Testimonials</p>
     <div class="testimonial-grid">
       <article class="testimonial-card" data-reveal>
-        <div class="testimonial-head">
-          <!-- PLACEHOLDER: Testimonial 1 headshot filename -->
-          <img class="testimonial-photo" src="REPLACE-WITH-TESTIMONIAL-1.jpg" alt="Photo of Alex M" />
-          <div class="testimonial-person">
-            <h3>Alex M</h3>
-            <p>Creative Director</p>
-          </div>
-        </div>
-        <p class="testimonial-comment">Working with them was smooth from pre-production through final export. Every cut felt intentional and elevated the campaign.</p>
+        <h3>Alex M</h3>
+        <p class="testimonial-role">Creative Director</p>
+        <!-- PLACEHOLDER: replace with the client's review screenshot -->
+        <img class="testimonial-screenshot" src="rev1.jpeg" alt="Review from Alex M" />
       </article>
 
       <article class="testimonial-card" data-reveal>
-        <div class="testimonial-head">
-          <!-- PLACEHOLDER: Testimonial 2 headshot filename -->
-          <img class="testimonial-photo" src="REPLACE-WITH-TESTIMONIAL-2.jpg" alt="Photo of Rina K" />
-          <div class="testimonial-person">
-            <h3>Rina K</h3>
-            <p>Artist Manager</p>
-          </div>
-        </div>
-        <p class="testimonial-comment">They quickly understood our visual language and delivered edits that felt cinematic while still true to the artist story.</p>
+        <h3>Rina K</h3>
+        <p class="testimonial-role">Artist Manager</p>
+        <!-- PLACEHOLDER: replace with the client's review screenshot -->
+        <img class="testimonial-screenshot" src="rev2.jpeg" alt="Review from Rina K" />
       </article>
 
       <article class="testimonial-card" data-reveal>
-        <div class="testimonial-head">
-          <!-- PLACEHOLDER: Testimonial 3 headshot filename -->
-          <img class="testimonial-photo" src="REPLACE-WITH-TESTIMONIAL-3.jpg" alt="Photo of Idris T" />
-          <div class="testimonial-person">
-            <h3>Idris T</h3>
-            <p>Brand Producer</p>
-          </div>
-        </div>
-        <p class="testimonial-comment">Fast communication, clean deliverables, and strong storytelling instincts. We will definitely collaborate again.</p>
+        <h3>Idris T</h3>
+        <p class="testimonial-role">Brand Producer</p>
+        <!-- PLACEHOLDER: replace with the client's review screenshot -->
+        <img class="testimonial-screenshot" src="rev3.jpeg" alt="Review from Idris T" />
       </article>
     </div>
   </section>
@@ -2307,13 +2280,20 @@ section {
     <div class="about-grid">
       <div class="about-photo" data-reveal>
         <!-- PLACEHOLDER: portrait/profile photo filename -->
-        <img src="REPLACE-WITH-PORTRAIT.jpg" alt="Portrait of the videographer" />
+        <img src="Him.jpeg" alt="Portrait of the videographer" />
       </div>
       <div class="about-text" data-reveal>
         <p>
-          Write a short bio here — two or three sentences about how they got into
-          video, what kind of stories they like to tell, and the tools or style
-          they shoot and edit with. Keep it in their voice, not a resume.
+          I’m a creative passionate about visual storytelling, content creation, and turning ideas into meaningful visual experiences. 
+          My work spans videography, photography, graphic design, social media content, and creative direction.
+        </p>
+        <p>
+          I enjoy taking an idea and transforming it into something that not only looks good, but communicates, connects, and leaves an impression. Whether I’m behind the camera, designing a visual, editing a video, or developing content for social media, I’m always intentional about the details.
+        </p>
+        <p>
+          I’m constantly exploring new ideas, learning, experimenting, and pushing my creativity further. 
+          </p>
+          <p>For me, creativity is more than what I do, it’s how I see and express the world around me.</p> 
         </p>
         <ul class="about-facts">
           <li><span>Based in</span> Nairobi, Kenya</li>
